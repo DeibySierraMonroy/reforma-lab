@@ -1,14 +1,14 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
-	testImplementation 'org.springframework:spring-web'
-	implementation project(':api-rest')
-	implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
-	implementation project(':jpa-repository')
+    implementation project(':api-rest')
+    implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+    implementation project(':jpa-repository')
     implementation project(':model')
     implementation project(':usecase')
     implementation 'com.oracle.database.jdbc:ojdbc8:21.9.0.0'
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     testImplementation 'com.tngtech.archunit:archunit:1.4.1'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind'
