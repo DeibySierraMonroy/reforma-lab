@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Builder
 public record Solicitud(
-        String idSolicitud,
+        String idMesa,
         String tdcTdTemporal,
         Long empNdTemporal,
         String tdcTdUsuaria,

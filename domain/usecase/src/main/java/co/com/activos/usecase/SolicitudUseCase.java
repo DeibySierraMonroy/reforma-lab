@@ -1,6 +1,7 @@
 package co.com.activos.usecase;
 
 import co.com.activos.model.solicitud.Solicitud;
+import co.com.activos.model.solicitud.SolicitudDetalle;
 import co.com.activos.model.solicitud.repository.SolicitudRepository;
 import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.common.ErrorCode;
@@ -39,5 +40,13 @@ public class SolicitudUseCase {
             return solicitudRepository.findByFechaCreacionBetween(fechaInicio, fechaFin, p, s);
         }
         return solicitudRepository.findAll(p, s);
+    }
+
+    public Mono<SolicitudDetalle> findDetalleById(String idMesa) {
+        return solicitudRepository.getDetalleById(idMesa)
+                .switchIfEmpty(Mono.error(new BusinessException(
+                        ErrorCode.NOT_FOUND,
+                        "Solicitud detail not found with id=" + idMesa
+                )));
     }
 }

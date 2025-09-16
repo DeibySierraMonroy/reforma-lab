@@ -4,10 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +20,7 @@ import java.util.Date;
 public class SolicitudData {
 
     @Id
-    @Column(name = "ID_SOLICITUD")
+    @Column(name = "ID_MESA")
     private String idSolicitud;
 
     @Column(name = "TDC_TD_TEMPORAL")
@@ -36,4 +40,8 @@ public class SolicitudData {
 
     @Column(name = "FECHA_CREACION")
     private Date fechaCreacion;
+
+    // Relación: Una Solicitud tiene muchos registros de SolicitudPersonal
+    @OneToMany(mappedBy = "solicitud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<SolicitudPersonalData> personal;
 }

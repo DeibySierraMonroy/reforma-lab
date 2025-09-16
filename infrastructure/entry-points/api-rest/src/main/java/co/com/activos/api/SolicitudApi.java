@@ -3,6 +3,7 @@ package co.com.activos.api;
 import co.com.activos.api.model.ApiResponse;
 import co.com.activos.api.model.SolicitudListParams;
 import co.com.activos.model.solicitud.Solicitud;
+import co.com.activos.model.solicitud.SolicitudDetalle;
 import co.com.activos.usecase.SolicitudUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,13 @@ public class SolicitudApi {
         log.info("listarSolicitudPorId start traceId={} id_solicitud={} uri={}", traceId, idSolicitud, request.getRequestURI());
         return solicitudUseCase.findById(idSolicitud)
                 .map(solicitud -> ApiResponse.success(solicitud, request.getRequestURI(), traceId));
+    }
+
+    @GetMapping(path = "/solicitudes/{id}/detalle")
+    public Mono<ApiResponse<SolicitudDetalle>> getDetalle(@PathVariable("id") String idMesa, HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("getDetalle start traceId={} id={} uri={}", traceId, idMesa, request.getRequestURI());
+        return solicitudUseCase.findDetalleById(idMesa)
+                .map(det -> ApiResponse.success(det, request.getRequestURI(), traceId));
     }
 }
