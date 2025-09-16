@@ -12,9 +12,9 @@ spring:
   profiles:
     include: null
   datasource:
-    url: ${url}
-    username: ${user}
-    password: ${password}
+    url: ${URL}
+    username: ${USER}
+    password: ${PASSWORD}
     driverClassName: oracle.jdbc.OracleDriver
     hikari:
       connectionTimeout: 30000
