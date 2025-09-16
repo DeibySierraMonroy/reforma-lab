@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
-    private String status; // success | error
+    private String status; // HTTP status code as string (e.g., "200", "400", "422", "500")
     private T data;
     private ErrorDetail error;
     private String path;
@@ -26,12 +26,12 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> error(ErrorDetail error, String path) {
-        return error(error, path, null);
+        return error(error, path, null, 500);
     }
 
     public static <T> ApiResponse<T> success(T data, String path, String traceId) {
         return ApiResponse.<T>builder()
-                .status("success")
+                .status("200")
                 .data(data)
                 .path(path)
                 .traceId(traceId)
@@ -40,8 +40,12 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> error(ErrorDetail error, String path, String traceId) {
+        return error(error, path, traceId, 500);
+    }
+
+    public static <T> ApiResponse<T> error(ErrorDetail error, String path, String traceId, int statusCode) {
         return ApiResponse.<T>builder()
-                .status("error")
+                .status(String.valueOf(statusCode))
                 .error(error)
                 .path(path)
                 .traceId(traceId)

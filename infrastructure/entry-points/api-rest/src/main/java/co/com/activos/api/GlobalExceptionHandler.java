@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .build();
         String traceId = getTraceId(request);
-        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId), status);
+        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, status.value()), status);
     }
 
     @ExceptionHandler({
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .build();
         String traceId = getTraceId(request);
-        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
                 .violations(violations)
                 .build();
         String traceId = getTraceId(request);
-        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId), HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, HttpStatus.UNPROCESSABLE_ENTITY.value()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
                 .details(ex.getMessage())
                 .build();
         String traceId = getTraceId(request);
-        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, HttpStatus.INTERNAL_SERVER_ERROR.value()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private HttpStatus mapErrorCodeToStatus(ErrorCode code) {
