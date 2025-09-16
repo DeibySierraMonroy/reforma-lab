@@ -1,6 +1,8 @@
 FROM eclipse-temurin:21-jdk-alpine
 
 # Crear el grupo y usuario
+
+# Crear el grupo y usuario
 RUN addgroup -S devopsc && adduser -S javams -G devopsc
 
 # Crear y asignar permisos al directorio
