@@ -1,0 +1,41 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: "ms-reform"
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: "/h2"
+  profiles:
+    include: null
+  datasource:
+    url: "jdbc:oracle:thin:@//192.168.21.147:1521/TEST"
+    username: "desierra"
+    password: "Test2030"
+    driverClassName: oracle.jdbc.OracleDriver
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 300000
+      maxLifetime: 1800000
+      minimumIdle: 3
+      maximumPoolSize: 20
+      leakDetectionThreshold: 1800000
+  jpa:
+    databasePlatform: "org.hibernate.dialect.OracleDialect"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+# API custom properties
+api:
+  response:
+    log-level: INFO
