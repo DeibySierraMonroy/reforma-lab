@@ -12,9 +12,9 @@ spring:
   profiles:
     include: null
   datasource:
-    url: "jdbc:oracle:thin:@//192.168.21.147:1521/TEST"
-    username: "desierra"
-    password: "Test2030"
+    url: ${url}
+    username: ${user}
+    password: ${password}
     driverClassName: oracle.jdbc.OracleDriver
     hikari:
       connectionTimeout: 30000
