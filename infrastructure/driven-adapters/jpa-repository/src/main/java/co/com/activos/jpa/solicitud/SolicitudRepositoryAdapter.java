@@ -13,12 +13,17 @@ import java.util.List;
 import java.util.Date;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, SolicitudData, String, SolicitudDataRepository>
         implements SolicitudRepository {
 
-    protected SolicitudRepositoryAdapter(SolicitudDataRepository repository, ObjectMapper mapper) {
+    private final SolicitudPersonalDataRepository personalRepository;
+
+    protected SolicitudRepositoryAdapter(SolicitudDataRepository repository, ObjectMapper mapper,
+                                         SolicitudPersonalDataRepository personalRepository) {
         super(repository, mapper, d -> Solicitud.builder()
                 .idMesa(d.getIdSolicitud())
                 .tdcTdTemporal(d.getTdcTdTemporal())
@@ -28,6 +33,7 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                 .estadoSolicitud(d.getEstadoSolicitud())
                 .fechaCreacion(d.getFechaCreacion())
                 .build());
+        this.personalRepository = personalRepository;
     }
 
     @Override
@@ -56,8 +62,21 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
 
     @Override
     public Mono<SolicitudDetalle> getDetalleById(String idSolicitud) {
-        return Mono.fromCallable(() -> repository.findByIdSolicitud(idSolicitud))
-                .flatMap(optional -> Mono.justOrEmpty(optional.map(this::toDetalle)));
+        return Mono.fromCallable(() -> repository.findWithPersonalById(idSolicitud))
+                .flatMap(optional -> Mono.justOrEmpty(optional))
+                .flatMap(data -> {
+                    boolean empty = data.getPersonal() == null || data.getPersonal().isEmpty();
+                    if (!empty) return Mono.just(data);
+                    return Mono.fromCallable(() -> {
+                        List<SolicitudPersonalData> childs = personalRepository.findBySolicitud_IdSolicitud(idSolicitud);
+                        if (childs != null && !childs.isEmpty()) {
+                            Set<SolicitudPersonalData> set = childs.stream().collect(Collectors.toSet());
+                            data.setPersonal(set);
+                        }
+                        return data;
+                    });
+                })
+                .map(this::toDetalle);
     }
 
     private SolicitudDetalle toDetalle(SolicitudData d) {
