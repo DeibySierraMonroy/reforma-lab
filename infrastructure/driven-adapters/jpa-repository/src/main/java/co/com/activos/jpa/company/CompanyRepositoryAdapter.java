@@ -22,3 +22,4 @@ public class CompanyRepositoryAdapter extends AdapterOperations<Company, Company
                 .map(this::toEntity);
     }
 }
+

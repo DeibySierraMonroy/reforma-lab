@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
-@Table(name = "MESA_SOLICITUD" , schema = "RHU")
+@Table(name = "V_MESA_SOLICITUD" )
 @Entity
 public class SolicitudData {
 
@@ -40,6 +40,12 @@ public class SolicitudData {
 
     @Column(name = "FECHA_CREACION")
     private Date fechaCreacion;
+
+    @Column(name = "EMPRESA_PRINCIPAL")
+    private String nombreTemporal;
+
+    @Column(name = "EMPRESA_USUARIA")
+    private String nombreUsuaria;
 
     // Relación: Una Solicitud tiene muchos registros de SolicitudPersonal
     @OneToMany(mappedBy = "solicitud", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -6,6 +6,7 @@ import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class CompanyUseCase {
@@ -17,5 +18,9 @@ public class CompanyUseCase {
                         ErrorCode.NOT_FOUND,
                         "Company not found with numberDocument=" + numberDocument + " and typeDocument=" + typeDocument
                 )));
+    }
+
+    public Mono<List<Company>> findAll() {
+        return Mono.fromCallable(companyRepository::findAll);
     }
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(name = "empresa")
+@Table(name = "vprincipal_acc")
 @Entity
 public class CompanyData {
 
@@ -20,5 +20,7 @@ public class CompanyData {
     private String typeDocument;
     @Column(name = "EMP_NOMBRE")
     private String name;
+    @Column(name = "PRI_ESTADO")
+    private String status;
 
 }

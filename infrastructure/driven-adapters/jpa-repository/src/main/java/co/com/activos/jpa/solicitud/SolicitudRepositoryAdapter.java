@@ -32,6 +32,8 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                 .empNdUsuaria(d.getEmpNdUsuaria())
                 .estadoSolicitud(d.getEstadoSolicitud())
                 .fechaCreacion(d.getFechaCreacion())
+                .nombreTemporal(d.getNombreTemporal())
+                .nombreUsuaria(d.getNombreUsuaria())
                 .build());
         this.personalRepository = personalRepository;
     }
@@ -46,6 +48,8 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
         data.setEmpNdUsuaria(entity.empNdUsuaria());
         data.setEstadoSolicitud(entity.estadoSolicitud());
         data.setFechaCreacion(entity.fechaCreacion());
+        data.setNombreTemporal(entity.nombreTemporal());
+        data.setNombreUsuaria(entity.nombreUsuaria());
         return data;
     }
 
@@ -173,9 +177,111 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
 
     @Override
     public Mono<List<Solicitud>> findByEstadoAndFechaCreacionBetween(String estadoSolicitud, Date fechaInicio, Date fechaFin, int page, int size) {
-        return Mono.fromCallable(() -> {
-            Pageable pageable = PageRequest.of(page, size);
-            return repository.findByEstadoSolicitudAndFechaCreacionBetween(estadoSolicitud, fechaInicio, fechaFin, pageable).getContent();
-        }).map(this::toList);
+        Pageable pageable = PageRequest.of(page, size);
+        return Mono.fromCallable(() -> repository.findByEstadoSolicitudAndFechaCreacionBetween(estadoSolicitud, fechaInicio, fechaFin, pageable))
+                .map(pageResult -> pageResult.getContent().stream()
+                        .map(this::toEntity)
+                        .collect(Collectors.toList()));
+    }
+
+    @Override
+    public Mono<SolicitudPersonal> updateSolicitudPersonal(SolicitudPersonal solicitudPersonal) {
+        return Mono.fromCallable(() -> personalRepository.findById(solicitudPersonal.idMesaPersonal()))
+                .flatMap(optionalPersonal -> {
+                    if (optionalPersonal.isEmpty()) {
+                        return Mono.error(new RuntimeException("SolicitudPersonal not found with id: " + solicitudPersonal.idMesaPersonal()));
+                    }
+                    
+                    SolicitudPersonalData personalData = optionalPersonal.get();
+                    
+                    // Update all fields from the request
+                    personalData.setPrimerApellido(solicitudPersonal.primerApellido());
+                    personalData.setSegundoApellido(solicitudPersonal.segundoApellido());
+                    personalData.setPrimerNombre(solicitudPersonal.primerNombre());
+                    personalData.setSegundoNombre(solicitudPersonal.segundoNombre());
+                    personalData.setTipoDocumento(solicitudPersonal.tipoDocumento());
+                    personalData.setNumeroDocumento(solicitudPersonal.numeroDocumento());
+                    personalData.setTelefonoContacto(solicitudPersonal.telefonoContacto());
+                    personalData.setCargo(solicitudPersonal.cargo());
+                    personalData.setCausaOrigina(solicitudPersonal.causaOrigina());
+                    personalData.setDetalleOrigina(solicitudPersonal.detalleOrigina());
+                    personalData.setEspecificaCausa(solicitudPersonal.especificaCausa());
+                    personalData.setCargoReemplaza(solicitudPersonal.cargoReemplaza());
+                    personalData.setNombreReemplaza(solicitudPersonal.nombreReemplaza());
+                    personalData.setFechaFinReemplaza(solicitudPersonal.fechaFinReemplaza());
+                    personalData.setFechaFinCausal(solicitudPersonal.fechaFinCausal());
+                    personalData.setObservaciones(solicitudPersonal.observaciones());
+                    personalData.setCiudadTrabajo(solicitudPersonal.ciudadTrabajo());
+                    personalData.setSucursal(solicitudPersonal.sucursal());
+                    personalData.setCentroCosto(solicitudPersonal.centroCosto());
+                    personalData.setPuntoVenta(solicitudPersonal.puntoVenta());
+                    personalData.setModalidadTrabajo(solicitudPersonal.modalidadTrabajo());
+                    personalData.setFechaIngreso(solicitudPersonal.fechaIngreso());
+                    personalData.setNivelRiesgo(solicitudPersonal.nivelRiesgo());
+                    personalData.setSalario(solicitudPersonal.salario());
+                    personalData.setModalidadSalario(solicitudPersonal.modalidadSalario());
+                    personalData.setHorasAlMes(solicitudPersonal.horasAlMes());
+                    personalData.setValorHora(solicitudPersonal.valorHora());
+                    personalData.setValorDia(solicitudPersonal.valorDia());
+                    personalData.setTrabajaSabados(solicitudPersonal.trabajaSabados());
+                    personalData.setDiaDescanso(solicitudPersonal.diaDescanso());
+                    personalData.setPagoSubsidioTransporte(solicitudPersonal.pagoSubsidioTransporte());
+                    personalData.setTipoAuxilio(solicitudPersonal.tipoAuxilio());
+                    personalData.setOtroAuxilio(solicitudPersonal.otroAuxilio());
+                    personalData.setValorAuxilio(solicitudPersonal.valorAuxilio());
+                    personalData.setComision(solicitudPersonal.comision());
+                    personalData.setTipoComision(solicitudPersonal.tipoComision());
+                    personalData.setPagoGarantizado(solicitudPersonal.pagoGarantizado());
+                    personalData.setMesesPagoGarantizado(solicitudPersonal.mesesPagoGarantizado());
+                    personalData.setObservacionPagos(solicitudPersonal.observacionPagos());
+                    personalData.setHoraPresentacion(solicitudPersonal.horaPresentacion());
+                    
+                    personalData = personalRepository.save(personalData);
+                    
+                    // Convert back to domain model with all fields
+                    return Mono.just(SolicitudPersonal.builder()
+                            .idMesaPersonal(personalData.getIdMesaPersonal())
+                            .primerApellido(personalData.getPrimerApellido())
+                            .segundoApellido(personalData.getSegundoApellido())
+                            .primerNombre(personalData.getPrimerNombre())
+                            .segundoNombre(personalData.getSegundoNombre())
+                            .tipoDocumento(personalData.getTipoDocumento())
+                            .numeroDocumento(personalData.getNumeroDocumento())
+                            .telefonoContacto(personalData.getTelefonoContacto())
+                            .cargo(personalData.getCargo())
+                            .causaOrigina(personalData.getCausaOrigina())
+                            .detalleOrigina(personalData.getDetalleOrigina())
+                            .especificaCausa(personalData.getEspecificaCausa())
+                            .cargoReemplaza(personalData.getCargoReemplaza())
+                            .nombreReemplaza(personalData.getNombreReemplaza())
+                            .fechaFinReemplaza(personalData.getFechaFinReemplaza())
+                            .fechaFinCausal(personalData.getFechaFinCausal())
+                            .observaciones(personalData.getObservaciones())
+                            .ciudadTrabajo(personalData.getCiudadTrabajo())
+                            .sucursal(personalData.getSucursal())
+                            .centroCosto(personalData.getCentroCosto())
+                            .puntoVenta(personalData.getPuntoVenta())
+                            .modalidadTrabajo(personalData.getModalidadTrabajo())
+                            .fechaIngreso(personalData.getFechaIngreso())
+                            .nivelRiesgo(personalData.getNivelRiesgo())
+                            .salario(personalData.getSalario())
+                            .modalidadSalario(personalData.getModalidadSalario())
+                            .horasAlMes(personalData.getHorasAlMes())
+                            .valorHora(personalData.getValorHora())
+                            .valorDia(personalData.getValorDia())
+                            .trabajaSabados(personalData.getTrabajaSabados())
+                            .diaDescanso(personalData.getDiaDescanso())
+                            .pagoSubsidioTransporte(personalData.getPagoSubsidioTransporte())
+                            .tipoAuxilio(personalData.getTipoAuxilio())
+                            .otroAuxilio(personalData.getOtroAuxilio())
+                            .valorAuxilio(personalData.getValorAuxilio())
+                            .comision(personalData.getComision())
+                            .tipoComision(personalData.getTipoComision())
+                            .pagoGarantizado(personalData.getPagoGarantizado())
+                            .mesesPagoGarantizado(personalData.getMesesPagoGarantizado())
+                            .observacionPagos(personalData.getObservacionPagos())
+                            .horaPresentacion(personalData.getHoraPresentacion())
+                            .build());
+                });
     }
 }

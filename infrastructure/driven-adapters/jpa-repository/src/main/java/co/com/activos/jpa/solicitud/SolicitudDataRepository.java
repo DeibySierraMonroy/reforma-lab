@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface SolicitudDataRepository extends CrudRepository<SolicitudData, String>, QueryByExampleExecutor<SolicitudData> {
@@ -19,6 +20,13 @@ public interface SolicitudDataRepository extends CrudRepository<SolicitudData, S
 
     @EntityGraph(attributePaths = "personal")
     Optional<SolicitudData> findByIdSolicitud(String idSolicitud);
+    
+    @EntityGraph(attributePaths = {})
+    @Query("SELECT s FROM SolicitudData s WHERE s.tdcTdUsuaria = :tdcTdUsuaria AND s.empNdUsuaria = :empNdUsuaria")
+    List<SolicitudData> findByTdcTdUsuariaAndEmpNdUsuaria(
+        @Param("tdcTdUsuaria") String tdcTdUsuaria,
+        @Param("empNdUsuaria") Long empNdUsuaria
+    );
 
     @Query("select distinct s from SolicitudData s left join fetch s.personal where s.idSolicitud = :id")
     Optional<SolicitudData> findWithPersonalById(@Param("id") String id);

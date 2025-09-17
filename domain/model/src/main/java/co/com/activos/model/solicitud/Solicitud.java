@@ -9,8 +9,10 @@ public record Solicitud(
         String idMesa,
         String tdcTdTemporal,
         Long empNdTemporal,
+        String nombreTemporal,
         String tdcTdUsuaria,
         Long empNdUsuaria,
+        String nombreUsuaria,
         String estadoSolicitud,
         Date fechaCreacion
 ) {}

@@ -2,6 +2,7 @@ package co.com.activos.usecase;
 
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
+import co.com.activos.model.solicitud.SolicitudPersonal;
 import co.com.activos.model.solicitud.repository.SolicitudRepository;
 import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.common.ErrorCode;
@@ -48,5 +49,38 @@ public class SolicitudUseCase {
                         ErrorCode.NOT_FOUND,
                         "Solicitud detail not found with id=" + idMesa
                 )));
+    }
+    
+    public Mono<SolicitudPersonal> updateSolicitudPersonal(String id, SolicitudPersonal solicitudPersonal) {
+        // Validate input
+        if (solicitudPersonal == null || solicitudPersonal.idMesaPersonal() == null) {
+            return Mono.error(new BusinessException(
+                ErrorCode.BAD_REQUEST, 
+                "El cuerpo de la solicitud no puede estar vacío"
+            ));
+        }
+
+        // Validate ID consistency
+        if (!id.equals(solicitudPersonal.idMesaPersonal())) {
+            return Mono.error(new BusinessException(
+                ErrorCode.BAD_REQUEST,
+                "ID en la ruta no coincide con el ID en el cuerpo de la solicitud"
+            ));
+        }
+
+        return solicitudRepository.updateSolicitudPersonal(solicitudPersonal)
+            .switchIfEmpty(Mono.error(new BusinessException(
+                ErrorCode.NOT_FOUND,
+                "No se encontró la solicitud con ID: " + id
+            )))
+            .onErrorMap(e -> {
+                if (e instanceof BusinessException) {
+                    return e;
+                }
+                return new BusinessException(
+                    ErrorCode.INTERNAL_ERROR,
+                    "Error al actualizar la solicitud: " + e.getMessage()
+                );
+            });
     }
 }

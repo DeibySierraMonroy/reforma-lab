@@ -1,18 +1,19 @@
 package co.com.activos.api;
 
 import co.com.activos.api.model.ApiResponse;
+import co.com.activos.api.model.ErrorDetail;
 import co.com.activos.api.model.SolicitudListParams;
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
+import co.com.activos.model.common.BusinessException;
+import co.com.activos.model.solicitud.SolicitudPersonal;
 import co.com.activos.usecase.SolicitudUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
@@ -53,6 +54,18 @@ public class SolicitudApi {
         final String traceId = (String) request.getAttribute("traceId");
         log.info("getDetalle start traceId={} id={} uri={}", traceId, idMesa, request.getRequestURI());
         return solicitudUseCase.findDetalleById(idMesa)
-                .map(det -> ApiResponse.success(det, request.getRequestURI(), traceId));
+                .map(detalle -> ApiResponse.success(detalle, request.getRequestURI(), traceId));
+    }
+
+    @PutMapping("/solicitudes/personal/{id}")
+    public Mono<ApiResponse<SolicitudPersonal>> actualizarSolicitudPersonal(
+            @PathVariable String id,
+            @Valid @RequestBody SolicitudPersonal solicitudPersonal,
+            HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("actualizarSolicitudPersonal start traceId={} id={}", traceId, id);
+        
+        return solicitudUseCase.updateSolicitudPersonal(id, solicitudPersonal)
+                .map(updated -> ApiResponse.success(updated, request.getRequestURI(), traceId));
     }
 }
