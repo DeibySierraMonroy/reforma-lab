@@ -1,5 +1,5 @@
 server:
-  port: ${PORT}
+  port: ${PORT_SERVER}
 spring:
   application:
     name: "ms-reform"
