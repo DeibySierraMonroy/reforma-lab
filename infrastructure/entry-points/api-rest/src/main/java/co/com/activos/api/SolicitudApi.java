@@ -1,18 +1,15 @@
 package co.com.activos.api;
 
 import co.com.activos.api.model.ApiResponse;
-import co.com.activos.api.model.ErrorDetail;
 import co.com.activos.api.model.SolicitudListParams;
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
-import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.solicitud.SolicitudPersonal;
 import co.com.activos.usecase.SolicitudUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.Valid;
