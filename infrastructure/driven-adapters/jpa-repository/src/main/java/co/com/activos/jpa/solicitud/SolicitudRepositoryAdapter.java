@@ -88,8 +88,10 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                 .idMesa(d.getIdSolicitud())
                 .tdcTdTemporal(d.getTdcTdTemporal())
                 .empNdTemporal(d.getEmpNdTemporal())
+                .nombreTemporal(d.getNombreTemporal())
                 .tdcTdUsuaria(d.getTdcTdUsuaria())
                 .empNdUsuaria(d.getEmpNdUsuaria())
+                .nombreUsuaria(d.getNombreUsuaria())
                 .estadoSolicitud(d.getEstadoSolicitud())
                 .fechaCreacion(d.getFechaCreacion())
                 .build();

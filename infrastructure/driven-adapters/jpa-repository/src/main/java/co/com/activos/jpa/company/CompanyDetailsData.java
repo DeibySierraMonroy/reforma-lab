@@ -30,7 +30,7 @@ public class CompanyDetailsData {
     @Column(name = "EMP_ND_USUARIA")
     private Long numberDocumentUsuaria;
     
-    @Column(name = "EMPRESA_PRINCIPAL")
+    @Column(name = "EMPRESA_USUARIA")
     private String name;
     
     @Column(name = "ESTADO_SOLICITUD")
