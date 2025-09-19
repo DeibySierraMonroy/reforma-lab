@@ -30,7 +30,7 @@ public class CausalIngresoDetalleApi {
         final String traceId = (String) request.getAttribute("traceId");
         log.info("listCausales start traceId={} uri={}", traceId, request.getRequestURI());
         return causalIngresoDetalleUseCase.listAll()
-                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
+                    .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
     }
 
     @GetMapping(path = "/causales-ingreso-detalle/{id}")
@@ -48,7 +48,6 @@ public class CausalIngresoDetalleApi {
         final String traceId = (String) request.getAttribute("traceId");
         log.info("createCausal start traceId={} body={} uri={}", traceId, requestBody, request.getRequestURI());
         CausalIngresoDetalle causal = CausalIngresoDetalle.builder()
-                .idCausalIngresoDet(requestBody.getIdCausalIngresoDet())
                 .descCausalIngresoDet(requestBody.getDescCausalIngresoDet())
                 .estado(requestBody.getEstado())
                 .audUsuario(requestBody.getAudUsuario())

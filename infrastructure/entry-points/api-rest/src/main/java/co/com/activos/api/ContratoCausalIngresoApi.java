@@ -1,80 +1,79 @@
 package co.com.activos.api;
 
-import co.com.activos.model.contrato.ContratoCausalIngreso;
+import co.com.activos.model.contratocausalingreso.ContratoCausalIngreso;
 import co.com.activos.usecase.ContratoCausalIngresoUseCase;
 import co.com.activos.api.model.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/contratos-ingreso", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/api/contratos-causales-ingreso")
+@Validated
 public class ContratoCausalIngresoApi {
 
-    private final ContratoCausalIngresoUseCase contratoUseCase;
+    private final ContratoCausalIngresoUseCase contratoCausalIngresoUseCase;
 
-    @PostMapping
-    public Mono<ApiResponse<ContratoCausalIngreso>> crearContratoIngreso(
-            @Valid @RequestBody ContratoCausalIngreso contrato,
-            HttpServletRequest request) {
+    @GetMapping
+    public Mono<ApiResponse<List<ContratoCausalIngreso>>> listAll(HttpServletRequest request) {
         final String traceId = (String) request.getAttribute("traceId");
-        log.info("crearContratoIngreso start traceId={}", traceId);
-        
-        return contratoUseCase.guardarContrato(contrato)
-                .map(saved -> ApiResponse.success(saved, request.getRequestURI(), traceId));
+        log.info("listAll start traceId={} uri={}", traceId, request.getRequestURI());
+        return contratoCausalIngresoUseCase.findAll()
+                .collectList()
+                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
     }
 
     @GetMapping("/{id}")
-    public Mono<ApiResponse<ContratoCausalIngreso>> obtenerContratoIngreso(
-            @PathVariable(required = true) @Min(value = 1, message = "El ID es requerido y debe ser un número positivo") Long id,
+    public Mono<ApiResponse<ContratoCausalIngreso>> getById(
+            @PathVariable @Positive(message = "ID must be > 0") Long id,
             HttpServletRequest request) {
         final String traceId = (String) request.getAttribute("traceId");
-        log.info("obtenerContratoIngreso start traceId={} id={}", traceId, id);
-        
-        return contratoUseCase.buscarPorId(id)
-                .map(contrato -> ApiResponse.success(contrato, request.getRequestURI(), traceId))
-                .switchIfEmpty(Mono.defer(() -> Mono.error(new RuntimeException("No se encontró el contrato con ID: " + id))));
+        log.info("getById start traceId={} id={} uri={}", traceId, id, request.getRequestURI());
+        return contratoCausalIngresoUseCase.findById(id)
+                .map(contrato -> ApiResponse.success(contrato, request.getRequestURI(), traceId));
     }
 
-    @PutMapping("/{id}")
-    public Mono<ApiResponse<ContratoCausalIngreso>> actualizarContratoIngreso(
-            @PathVariable Long id,
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Mono<ApiResponse<ContratoCausalIngreso>> create(
             @Valid @RequestBody ContratoCausalIngreso contrato,
             HttpServletRequest request) {
         final String traceId = (String) request.getAttribute("traceId");
-        log.info("actualizarContratoIngreso start traceId={} id={}", traceId, id);
-        
-        ContratoCausalIngreso contratoActualizado = ContratoCausalIngreso.builder()
-                .idContratoCausalIngreso(id)
-                .tdcTd(contrato.tdcTd())
-                .empNd(contrato.empNd())
-                .ctoNumero(contrato.ctoNumero())
-                .tdcTdFil(contrato.tdcTdFil())
-                .empNdFil(contrato.empNdFil())
-                .tdcTdEpl(contrato.tdcTdEpl())
-                .eplNd(contrato.eplNd())
-                .idRelCausalIngresoDetalle(contrato.idRelCausalIngresoDetalle())
-                .descLabor(contrato.descLabor())
-                .codigoCargo(contrato.codigoCargo())
-                .nombreCargo(contrato.nombreCargo())
-                .nomEmpleadoReemplazar(contrato.nomEmpleadoReemplazar())
-                .descCausaIncremento(contrato.descCausaIncremento())
-                .idCalendarioDetalle(contrato.idCalendarioDetalle())
-                .estado(contrato.estado())
-                .estadoProceso(contrato.estadoProceso())
-                .audUsuario(contrato.audUsuario())
-                .audFecha(contrato.audFecha())
-                .build();
-                
-        return contratoUseCase.actualizarContrato(contratoActualizado)
+        log.info("create start traceId={} body={} uri={}", traceId, contrato, request.getRequestURI());
+        return contratoCausalIngresoUseCase.save(contrato)
+                .map(saved -> ApiResponse.success(saved, request.getRequestURI(), traceId));
+    }
+
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ApiResponse<ContratoCausalIngreso>> update(
+            @PathVariable @Positive(message = "ID must be > 0") Long id,
+            @Valid @RequestBody ContratoCausalIngreso contrato,
+            HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("update start traceId={} id={} body={} uri={}", traceId, id, contrato, request.getRequestURI());
+        contrato.setIdContratoCausalIngreso(id);
+        return contratoCausalIngresoUseCase.update(contrato)
                 .map(updated -> ApiResponse.success(updated, request.getRequestURI(), traceId));
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<ApiResponse<String>> delete(
+            @PathVariable @Positive(message = "ID must be > 0") Long id,
+            HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("delete start traceId={} id={} uri={}", traceId, id, request.getRequestURI());
+        return contratoCausalIngresoUseCase.deleteById(id)
+                .thenReturn(ApiResponse.success("deleted", request.getRequestURI(), traceId));
     }
 }
