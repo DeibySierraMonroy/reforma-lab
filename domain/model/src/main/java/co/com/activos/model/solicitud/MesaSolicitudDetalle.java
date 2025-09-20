@@ -34,4 +34,8 @@ public class MesaSolicitudDetalle {
     private Long empNdUsuaria;
     private String idMesa;
     private String idMesaPersonal;
+    private String nombreTemporal;
+    private String nombreUsuaria;
+    private Date fecha;
+    private String estado;
 }

@@ -18,6 +18,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.slf4j.MDC;
 import jakarta.validation.ConstraintViolation;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -34,17 +35,36 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, status.value()), status);
     }
 
-    @ExceptionHandler({
-            MethodArgumentTypeMismatchException.class,
-            MissingServletRequestParameterException.class
-    })
-    public ResponseEntity<ApiResponse<Void>> handleBadRequest(Exception ex, HttpServletRequest request) {
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTypeMismatch(MethodArgumentTypeMismatchException ex, HttpServletRequest request) {
+        String paramName = ex.getName();
+        String value = ex.getValue() != null ? ex.getValue().toString() : "null";
+        String expectedType = ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "desconocido";
+
         ErrorDetail detail = ErrorDetail.builder()
                 .code(ErrorCode.BAD_REQUEST.name())
-                .message(ex.getMessage())
+                .message(String.format("El parámetro '%s' con valor '%s' no es válido. Se esperaba un valor de tipo %s.",
+                        paramName, value, expectedType))
                 .build();
-        String traceId = getTraceId(request);
-        return new ResponseEntity<>(ApiResponse.error(detail, request.getRequestURI(), traceId, HttpStatus.BAD_REQUEST.value()), HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.error(detail, request.getRequestURI(), getTraceId(request)));
+    }
+
+    // 2. Falta un parámetro obligatorio
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ApiResponse<Void>> handleMissingParam(MissingServletRequestParameterException ex, HttpServletRequest request) {
+        String paramName = ex.getParameterName();
+        String expectedType = ex.getParameterType();
+
+        ErrorDetail detail = ErrorDetail.builder()
+                .code(ErrorCode.BAD_REQUEST.name())
+                .message(String.format("El parámetro obligatorio '%s' está ausente. Se esperaba un valor de tipo %s.",
+                        paramName, expectedType))
+                .build();
+
+        return ResponseEntity.badRequest()
+                .body(ApiResponse.error(detail, request.getRequestURI(), getTraceId(request)));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,14 +1,13 @@
 package co.com.activos.jpa.mesa;
 
+import co.com.activos.jpa.helper.SpecificationUtils;
+import co.com.activos.model.solicitud.busqueda.MesaSolicitudCriteria;
 import co.com.activos.model.solicitud.MesaSolicitudDetalle;
 import co.com.activos.model.solicitud.repository.MesaSolicitudDetalleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
-import reactor.core.scheduler.Schedulers;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,13 +17,23 @@ public class MesaSolicitudDetalleRepositoryAdapter implements MesaSolicitudDetal
 
     @Override
     public Flux<MesaSolicitudDetalle> buscarPorIdMesaPersonal(String idMesaPersonal) {
-        return Flux.defer(() -> {
-            List<MesaSolicitudDetalleData> dataList = repository.findByIdMesaPersonal(idMesaPersonal);
-            List<MesaSolicitudDetalle> result = dataList.stream()
-                    .map(this::toDomain)
-                    .collect(Collectors.toList());
-            return Flux.fromIterable(result);
-        }).subscribeOn(Schedulers.boundedElastic());
+        return Flux.fromIterable(
+                repository.findByIdMesaPersonal(idMesaPersonal).stream()
+                        .map(this::toDomain)
+                        .toList());
+    }
+
+    @Override
+    public Flux<MesaSolicitudDetalle> buscar(MesaSolicitudCriteria criteria) {
+        Specification<MesaSolicitudDetalleData> spec =
+                SpecificationUtils.buildFromDto(criteria, MesaSolicitudDetalleData.class);
+
+        return Flux.fromIterable(
+                repository.findAll(spec)
+                        .stream()
+                        .map(this::toDomain)
+                        .toList()
+        );
     }
 
     private MesaSolicitudDetalle toDomain(MesaSolicitudDetalleData data) {

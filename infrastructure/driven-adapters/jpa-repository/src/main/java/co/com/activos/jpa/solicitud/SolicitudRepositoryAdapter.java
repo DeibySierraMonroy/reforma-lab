@@ -9,6 +9,7 @@ import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Date;
 import org.springframework.data.domain.PageRequest;
@@ -67,14 +68,14 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
     @Override
     public Mono<SolicitudDetalle> getDetalleById(String idSolicitud) {
         return Mono.fromCallable(() -> repository.findWithPersonalById(idSolicitud))
-                .flatMap(optional -> Mono.justOrEmpty(optional))
+                .flatMap(Mono::justOrEmpty)
                 .flatMap(data -> {
                     boolean empty = data.getPersonal() == null || data.getPersonal().isEmpty();
                     if (!empty) return Mono.just(data);
                     return Mono.fromCallable(() -> {
                         List<SolicitudPersonalData> childs = personalRepository.findBySolicitud_IdSolicitud(idSolicitud);
                         if (childs != null && !childs.isEmpty()) {
-                            Set<SolicitudPersonalData> set = childs.stream().collect(Collectors.toSet());
+                            Set<SolicitudPersonalData> set = new HashSet<>(childs);
                             data.setPersonal(set);
                         }
                         return data;
