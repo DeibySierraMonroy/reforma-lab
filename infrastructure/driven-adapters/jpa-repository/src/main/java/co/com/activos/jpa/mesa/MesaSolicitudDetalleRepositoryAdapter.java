@@ -63,6 +63,7 @@ public class MesaSolicitudDetalleRepositoryAdapter implements MesaSolicitudDetal
                 .nombreTemporal(data.getNombreTemporal())
                 .nombreUsuaria(data.getNombreUsuaria())
                 .idParametrizacion(data.getIdParametrizacion())
+                .observacionCausa(data.getObservacionCausa())
                 .build();
     }
 }

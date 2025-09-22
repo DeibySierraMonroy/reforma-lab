@@ -90,4 +90,7 @@ public class MesaSolicitudDetalleData {
 
     @Column(name = "ID_PARMETRIZACION")
     private Long idParametrizacion;
+
+    @Column(name = "OBSERVACION_CAUSA")
+    private String observacionCausa;
 }

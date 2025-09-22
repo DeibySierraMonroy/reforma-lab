@@ -37,4 +37,5 @@ public class MesaSolicitudDetalle {
     private String nombreTemporal;
     private String nombreUsuaria;
     private Long idParametrizacion;
+    private String observacionCausa;
 }
