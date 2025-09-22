@@ -35,7 +35,7 @@ public class MesaSolicitudDetalleData {
     private String tipoDocumento;
 
     @Column(name = "NUMERO_DOCUMENTO")
-    private String numeroDocumento;
+    private Long numeroDocumento;
 
     @Column(name = "TELEFONO_CONTACTO")
     private String telefonoContacto;
@@ -81,4 +81,13 @@ public class MesaSolicitudDetalleData {
 
     @Column(name = "ID_MESA")
     private String idMesa;
+
+    @Column(name = "EMPRESA_USUARIA")
+    private String nombreTemporal;
+
+    @Column(name = "EMPRESA_PRINCIPAL")
+    private String nombreUsuaria;
+
+    @Column(name = "ID_PARMETRIZACION")
+    private Long idParametrizacion;
 }

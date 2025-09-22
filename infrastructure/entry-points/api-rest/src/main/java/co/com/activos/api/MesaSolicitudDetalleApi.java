@@ -1,12 +1,10 @@
 package co.com.activos.api;
 
-import co.com.activos.api.model.ApiResponse;
 import co.com.activos.model.solicitud.MesaSolicitudDetalle;
 import co.com.activos.usecase.MesaSolicitudDetalleUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

@@ -14,10 +14,10 @@ public class MesaSolicitudCriteria {
     private String tipoDoc;
 
     @FilterBy("numeroDocumento")
-    private String numeroDoc;
+    private Long numeroDoc;
 
     @FilterBy("empNdTemporal")
-    private String empTemporal;
+    private Long empTemporal;
 
     @FilterBy("tdcTdTemporal")
     private String tdTemporal;

@@ -17,7 +17,7 @@ public class MesaSolicitudDetalle {
     private String primerApellido;
     private String segundoApellido;
     private String tipoDocumento;
-    private String numeroDocumento;
+    private Long numeroDocumento;
     private String telefonoContacto;
     private String cargo;
     private String causaOrigina;
@@ -36,6 +36,5 @@ public class MesaSolicitudDetalle {
     private String idMesaPersonal;
     private String nombreTemporal;
     private String nombreUsuaria;
-    private Date fecha;
-    private String estado;
+    private Long idParametrizacion;
 }

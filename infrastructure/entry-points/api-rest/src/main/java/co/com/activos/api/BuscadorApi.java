@@ -27,8 +27,8 @@ public class BuscadorApi {
     public Mono<ApiResponse<List<MesaSolicitudDetalle>>> buscar(
             @RequestParam(required = false) String idMesa,
             @RequestParam(required = false) String tipoDoc,
-            @RequestParam(required = false) String numeroDoc,
-            @RequestParam(required = false) String empTemporal,
+            @RequestParam(required = false) Long numeroDoc,
+            @RequestParam(required = false) Long empTemporal,
             @RequestParam(required = false) String tdTemporal,
             HttpServletRequest request) {
         
