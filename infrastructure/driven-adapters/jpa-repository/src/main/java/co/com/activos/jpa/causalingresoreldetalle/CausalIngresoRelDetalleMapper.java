@@ -15,6 +15,8 @@ public class CausalIngresoRelDetalleMapper {
                 .estado(data.getEstado())
                 .audUsuario(data.getAudUsuario())
                 .audFecha(data.getAudFecha())
+                .causalIngreso(data.getCausalIngreso())
+                .causalIngresoDet(data.getCausalIngresoDet())
                 .build();
     }
 
@@ -29,6 +31,8 @@ public class CausalIngresoRelDetalleMapper {
                 .estado(domain.getEstado())
                 .audUsuario(domain.getAudUsuario())
                 .audFecha(domain.getAudFecha())
+                .causalIngreso(domain.getCausalIngreso())
+                .causalIngresoDet(domain.getCausalIngresoDet())
                 .build();
     }
 }

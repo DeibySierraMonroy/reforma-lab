@@ -18,4 +18,6 @@ public class CausalIngresoRelDetalle {
     private String estado;
     private String audUsuario;
     private LocalDateTime audFecha;
+    private String causalIngreso;
+    private String causalIngresoDet;
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CausalIngresoDetalleUseCase {
@@ -48,5 +49,9 @@ public class CausalIngresoDetalleUseCase {
 
     public Mono<Void> delete(Long id) {
         return repository.deleteById(id);
+    }
+
+    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso) {
+        return repository.findNoParametrizadas(idCausalIngreso);
     }
 }

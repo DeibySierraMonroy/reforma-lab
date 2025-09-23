@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class CausalIngresoDetalleRepositoryAdapter extends AdapterOperations<CausalIngresoDetalle, CausalIngresoDetalleData, Long, CausalIngresoDetalleDataRepository>
@@ -47,5 +48,21 @@ public class CausalIngresoDetalleRepositoryAdapter extends AdapterOperations<Cau
     @Override
     public Mono<Void> deleteById(Long id) {
         return Mono.fromRunnable(() -> repository.deleteById(id));
+    }
+
+    @Override
+    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso) {
+        return Mono.fromCallable(() -> repository.findNoParametrizadas(idCausalIngreso))
+                .map(list -> list.stream().map(this::toDomain).collect(Collectors.toList()));
+    }
+
+    private CausalIngresoDetalle toDomain(CausalIngresoDetalleData data) {
+        return CausalIngresoDetalle.builder()
+                .idCausalIngresoDet(data.getIdCausalIngresoDet())
+                .descCausalIngresoDet(data.getDescCausalIngresoDet())
+                .estado(data.getEstado())
+                .audUsuario(data.getAudUsuario())
+                .audFecha(data.getAudFecha())
+                .build();
     }
 }

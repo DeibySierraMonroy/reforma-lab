@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CAUSAL_INGRESO_REL_DETALLE", schema = "RHU")
+@Table(name = "V_CAUSALES_PARAM")
 public class CausalIngresoRelDetalleData {
     
     @Id
@@ -40,4 +40,12 @@ public class CausalIngresoRelDetalleData {
     @CreationTimestamp
     @Column(name = "AUD_FECHA", columnDefinition = "DATE DEFAULT SYSDATE")
     private LocalDateTime audFecha;
+
+    @Column(name = "CAUSAL_INGRESO")
+    private String causalIngreso;
+
+    @Column(name = "CAUSAL_INGRESO_DETALLE")
+    private String causalIngresoDet;
+
 }
+

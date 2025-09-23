@@ -8,6 +8,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 @RequiredArgsConstructor
 public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRelDetalleRepository {
@@ -49,5 +52,13 @@ public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRe
         return Mono.fromRunnable(() -> repository.deleteById(id))
                 .subscribeOn(Schedulers.boundedElastic())
                 .then();
+    }
+
+    @Override
+    public Mono<List<CausalIngresoRelDetalle>> findParametrizadas(Long idCausalIngreso) {
+        return Mono.fromCallable(() -> repository.findByIdCausalIngreso(idCausalIngreso))
+                .map(list -> list.stream()
+                        .map(CausalIngresoRelDetalleMapper::toDomain)
+                        .toList());
     }
 }

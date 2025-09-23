@@ -82,4 +82,14 @@ public class CausalIngresoDetalleApi {
         return causalIngresoDetalleUseCase.delete(id)
                 .thenReturn(ApiResponse.success("deleted", request.getRequestURI(), traceId));
     }
+
+    @GetMapping(path = "/causales-ingreso-detalle/no-parametrizadas/{idCausalIngreso}")
+    public Mono<ApiResponse<List<CausalIngresoDetalle>>> findNoParametrizadas(@PathVariable("idCausalIngreso")
+                                                                                  @Positive(message = "idCausalIngreso must be > 0") Long idCausalIngreso,
+                                                                              HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("findNoParametrizadas start traceId={} idCausalIngreso={} uri={}", traceId, idCausalIngreso, request.getRequestURI());
+        return causalIngresoDetalleUseCase.findNoParametrizadas(idCausalIngreso)
+                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
+    }
 }

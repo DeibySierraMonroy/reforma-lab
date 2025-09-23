@@ -74,4 +74,13 @@ public class CausalIngresoRelDetalleApi {
         return useCase.deleteById(id)
                 .thenReturn(ApiResponse.success(null, request.getRequestURI(), traceId));
     }
+
+    @GetMapping("/parametrizadas/{idCausalIngreso}")
+    public Mono<ApiResponse<List<CausalIngresoRelDetalle>>> findParametrizadas(@PathVariable Long idCausalIngreso, HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("findParametrizadas start traceId={} idCausalIngreso={} uri={}", traceId, idCausalIngreso, request.getRequestURI());
+
+        return useCase.findParametrizadas(idCausalIngreso)
+                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
+    }
 }

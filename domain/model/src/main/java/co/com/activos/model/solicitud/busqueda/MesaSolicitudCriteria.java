@@ -22,5 +22,6 @@ public class MesaSolicitudCriteria {
     @FilterBy("tdcTdTemporal")
     private String tdTemporal;
 
-    private Integer tipoBusqueda;
+    @FilterBy("idMesaPersonal")
+    private String idMesaPersonal;
 }

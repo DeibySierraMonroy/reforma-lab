@@ -10,4 +10,5 @@ public interface CausalIngresoDetalleRepository {
     Mono<CausalIngresoDetalle> getById(Long id);
     Mono<CausalIngresoDetalle> upsert(CausalIngresoDetalle causal);
     Mono<Void> deleteById(Long id);
+    Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso);
 }
