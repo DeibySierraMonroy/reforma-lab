@@ -108,43 +108,7 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                         .numeroDocumento(p.getNumeroDocumento())
                         .telefonoContacto(p.getTelefonoContacto())
                         .cargo(p.getCargo())
-                        .causaOrigina(p.getCausaOrigina())
-                        .detalleOrigina(p.getDetalleOrigina())
-                        .especificaCausa(p.getEspecificaCausa())
-                        .cargoReemplaza(p.getCargoReemplaza())
-                        .nombreReemplaza(p.getNombreReemplaza())
-                        .fechaFinReemplaza(p.getFechaFinReemplaza())
-                        .fechaFinCausal(p.getFechaFinCausal())
-                        .observaciones(p.getObservaciones())
-                        .ciudadTrabajo(p.getCiudadTrabajo())
-                        .sucursal(p.getSucursal())
-                        .centroCosto(p.getCentroCosto())
-                        .puntoVenta(p.getPuntoVenta())
-                        .modalidadTrabajo(p.getModalidadTrabajo())
-                        .fechaIngreso(p.getFechaIngreso())
-                        .nivelRiesgo(p.getNivelRiesgo())
-                        .salario(p.getSalario())
-                        .modalidadSalario(p.getModalidadSalario())
-                        .horasAlMes(p.getHorasAlMes())
-                        .valorHora(p.getValorHora())
-                        .valorDia(p.getValorDia())
-                        .trabajaSabados(p.getTrabajaSabados())
-                        .diaDescanso(p.getDiaDescanso())
-                        .pagoSubsidioTransporte(p.getPagoSubsidioTransporte())
-                        .tipoAuxilio(p.getTipoAuxilio())
-                        .otroAuxilio(p.getOtroAuxilio())
-                        .valorAuxilio(p.getValorAuxilio())
-                        .comision(p.getComision())
-                        .tipoComision(p.getTipoComision())
-                        .pagoGarantizado(p.getPagoGarantizado())
-                        .mesesPagoGarantizado(p.getMesesPagoGarantizado())
-                        .observacionPagos(p.getObservacionPagos())
-                        .horaPresentacion(p.getHoraPresentacion())
-                        .lugarPresentacion(p.getLugarPresentacion())
-                        .telefonoPresentacion(p.getTelefonoPresentacion())
-                        .nombrePresentacion(p.getNombrePresentacion())
-                        .cargoPresentacion(p.getCargoPresentacion())
-                        .linkPresentacion(p.getLinkPresentacion())
+                        .estadoPersona(p.getEstadoPersona())
                         .build())
                 .toList();
 
@@ -206,38 +170,7 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                     personalData.setNumeroDocumento(solicitudPersonal.numeroDocumento());
                     personalData.setTelefonoContacto(solicitudPersonal.telefonoContacto());
                     personalData.setCargo(solicitudPersonal.cargo());
-                    personalData.setCausaOrigina(solicitudPersonal.causaOrigina());
-                    personalData.setDetalleOrigina(solicitudPersonal.detalleOrigina());
-                    personalData.setEspecificaCausa(solicitudPersonal.especificaCausa());
-                    personalData.setCargoReemplaza(solicitudPersonal.cargoReemplaza());
-                    personalData.setNombreReemplaza(solicitudPersonal.nombreReemplaza());
-                    personalData.setFechaFinReemplaza(solicitudPersonal.fechaFinReemplaza());
-                    personalData.setFechaFinCausal(solicitudPersonal.fechaFinCausal());
-                    personalData.setObservaciones(solicitudPersonal.observaciones());
-                    personalData.setCiudadTrabajo(solicitudPersonal.ciudadTrabajo());
-                    personalData.setSucursal(solicitudPersonal.sucursal());
-                    personalData.setCentroCosto(solicitudPersonal.centroCosto());
-                    personalData.setPuntoVenta(solicitudPersonal.puntoVenta());
-                    personalData.setModalidadTrabajo(solicitudPersonal.modalidadTrabajo());
-                    personalData.setFechaIngreso(solicitudPersonal.fechaIngreso());
-                    personalData.setNivelRiesgo(solicitudPersonal.nivelRiesgo());
-                    personalData.setSalario(solicitudPersonal.salario());
-                    personalData.setModalidadSalario(solicitudPersonal.modalidadSalario());
-                    personalData.setHorasAlMes(solicitudPersonal.horasAlMes());
-                    personalData.setValorHora(solicitudPersonal.valorHora());
-                    personalData.setValorDia(solicitudPersonal.valorDia());
-                    personalData.setTrabajaSabados(solicitudPersonal.trabajaSabados());
-                    personalData.setDiaDescanso(solicitudPersonal.diaDescanso());
-                    personalData.setPagoSubsidioTransporte(solicitudPersonal.pagoSubsidioTransporte());
-                    personalData.setTipoAuxilio(solicitudPersonal.tipoAuxilio());
-                    personalData.setOtroAuxilio(solicitudPersonal.otroAuxilio());
-                    personalData.setValorAuxilio(solicitudPersonal.valorAuxilio());
-                    personalData.setComision(solicitudPersonal.comision());
-                    personalData.setTipoComision(solicitudPersonal.tipoComision());
-                    personalData.setPagoGarantizado(solicitudPersonal.pagoGarantizado());
-                    personalData.setMesesPagoGarantizado(solicitudPersonal.mesesPagoGarantizado());
-                    personalData.setObservacionPagos(solicitudPersonal.observacionPagos());
-                    personalData.setHoraPresentacion(solicitudPersonal.horaPresentacion());
+                    personalData.setEstadoPersona(solicitudPersonal.estadoPersona());
                     
                     personalData = personalRepository.save(personalData);
                     
@@ -252,38 +185,7 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                             .numeroDocumento(personalData.getNumeroDocumento())
                             .telefonoContacto(personalData.getTelefonoContacto())
                             .cargo(personalData.getCargo())
-                            .causaOrigina(personalData.getCausaOrigina())
-                            .detalleOrigina(personalData.getDetalleOrigina())
-                            .especificaCausa(personalData.getEspecificaCausa())
-                            .cargoReemplaza(personalData.getCargoReemplaza())
-                            .nombreReemplaza(personalData.getNombreReemplaza())
-                            .fechaFinReemplaza(personalData.getFechaFinReemplaza())
-                            .fechaFinCausal(personalData.getFechaFinCausal())
-                            .observaciones(personalData.getObservaciones())
-                            .ciudadTrabajo(personalData.getCiudadTrabajo())
-                            .sucursal(personalData.getSucursal())
-                            .centroCosto(personalData.getCentroCosto())
-                            .puntoVenta(personalData.getPuntoVenta())
-                            .modalidadTrabajo(personalData.getModalidadTrabajo())
-                            .fechaIngreso(personalData.getFechaIngreso())
-                            .nivelRiesgo(personalData.getNivelRiesgo())
-                            .salario(personalData.getSalario())
-                            .modalidadSalario(personalData.getModalidadSalario())
-                            .horasAlMes(personalData.getHorasAlMes())
-                            .valorHora(personalData.getValorHora())
-                            .valorDia(personalData.getValorDia())
-                            .trabajaSabados(personalData.getTrabajaSabados())
-                            .diaDescanso(personalData.getDiaDescanso())
-                            .pagoSubsidioTransporte(personalData.getPagoSubsidioTransporte())
-                            .tipoAuxilio(personalData.getTipoAuxilio())
-                            .otroAuxilio(personalData.getOtroAuxilio())
-                            .valorAuxilio(personalData.getValorAuxilio())
-                            .comision(personalData.getComision())
-                            .tipoComision(personalData.getTipoComision())
-                            .pagoGarantizado(personalData.getPagoGarantizado())
-                            .mesesPagoGarantizado(personalData.getMesesPagoGarantizado())
-                            .observacionPagos(personalData.getObservacionPagos())
-                            .horaPresentacion(personalData.getHoraPresentacion())
+                            .estadoPersona(personalData.getEstadoPersona())
                             .build());
                 });
     }

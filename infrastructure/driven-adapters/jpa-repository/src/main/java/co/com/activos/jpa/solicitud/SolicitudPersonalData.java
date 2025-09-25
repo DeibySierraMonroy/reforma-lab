@@ -160,4 +160,7 @@ public class SolicitudPersonalData {
 
     @Column(name = "LINK_PRESENTACION")
     private String linkPresentacion;
+
+    @Column(name = "MESA_ESTADO", nullable = false)
+    private String estadoPersona;
 }
