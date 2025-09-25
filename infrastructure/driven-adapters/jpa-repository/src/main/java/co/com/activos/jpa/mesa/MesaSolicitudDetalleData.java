@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "V_MESA_SOLICITUD_DETALLE", schema = "RHU")
+    @Table(name = "V_MESA_SOLICITUD_DETALLE", schema = "RHU")
 public class MesaSolicitudDetalleData {
     @Id
     @Column(name = "ID_MESA_PERSONAL")
@@ -93,4 +93,100 @@ public class MesaSolicitudDetalleData {
 
     @Column(name = "OBSERVACION_CAUSA")
     private String observacionCausa;
+
+    @Column(name = "CIUDAD_TRABAJO")
+    private String ciudadTrabajo;
+
+    @Column(name = "SUCURSAL")
+    private String sucursal;
+
+    @Column(name = "CENTRO_COSTO")
+    private String centroCosto;
+
+    @Column(name = "PUNTO_VENTA")
+    private String puntoVenta;
+
+    @Column(name = "MODALIDAD_TRABAJO")
+    private String modalidadTrabajo;
+
+    @Column(name = "FECHA_INGRESO")
+    private Date fechaIngreso;
+
+    @Column(name = "NIVEL_RIESGO")
+    private String nivelRiesgo;
+
+    @Column(name = "SALARIO")
+    private Double salario;
+
+    @Column(name = "MODALIDAD_SALARIO")
+    private String modalidadSalario;
+
+    @Column(name = "HORAS_AL_MES")
+    private Integer horasAlMes;
+
+    @Column(name = "VALOR_HORA")
+    private Double valorHora;
+
+    @Column(name = "VALOR_DIA")
+    private Double valorDia;
+
+    @Column(name = "TRABAJA_SABADOS")
+    private String trabajaSabados;
+
+    @Column(name = "DIA_DESCANSO")
+    private String diaDescanso;
+
+    @Column(name = "PAGO_SUBSIDIO_TRANSPORTE")
+    private String pagoSubsidioTransporte;
+
+    @Column(name = "TIPO_AUXILIO")
+    private String tipoAuxilio;
+
+    @Column(name = "OTRO_AUXILIO")
+    private String otroAuxilio;
+
+    @Column(name = "VALOR_AUXILIO")
+    private Double valorAuxilio;
+
+    @Column(name = "COMISION")
+    private String comision;
+
+    @Column(name = "TIPO_COMISION")
+    private String tipoComision;
+
+    @Column(name = "PAGO_GARANTIZADO")
+    private String pagoGarantizado;
+
+    @Column(name = "MESES_PAGO_GARANTIZADO")
+    private Integer mesesPagoGarantizado;
+
+    @Column(name = "OBSERVACION_PAGOS")
+    private String observacionPagos;
+
+    @Column(name = "HORA_PRESENTACION")
+    private String horaPresentacion;
+
+    @Column(name = "LUGAR_PRESENTACION")
+    private String lugarPresentacion;
+
+    @Column(name = "TELEFONO_PRESENTACION")
+    private String telefonoPresentacion;
+
+    @Column(name = "NOMBRE_PRESENTACION")
+    private String nombrePresentacion;
+
+    @Column(name = "CARGO_PRESENTACION")
+    private String cargoPresentacion;
+
+    @Column(name = "LINK_PRESENTACION")
+    private String linkPresentacion;
+
+    @Column(name = "AUD_USER")
+    private String audUser;
+
+    @Column(name = "AUD_DATE")
+    private Date audDate;
+
+    @Column(name = "ESTADO")
+    private String estado;
 }
