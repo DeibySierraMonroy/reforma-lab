@@ -16,12 +16,18 @@ public class MesaSolicitudCriteria {
     @FilterBy("numeroDocumento")
     private Long numeroDoc;
 
-    @FilterBy("empNdTemporal")
+    @FilterBy("empNdUsuaria")
     private Long empTemporal;
 
-    @FilterBy("tdcTdTemporal")
+    @FilterBy("tdcTdUsuaria")
     private String tdTemporal;
 
     @FilterBy("idMesaPersonal")
     private String idMesaPersonal;
+
+    @FilterBy("tdcTdTemporal")
+    private String tdEmpresa;
+
+    @FilterBy("empNdTemporal")
+    private Long empEmpresa;
 }

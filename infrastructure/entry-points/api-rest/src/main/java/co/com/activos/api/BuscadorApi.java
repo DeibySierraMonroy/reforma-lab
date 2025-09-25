@@ -31,6 +31,8 @@ public class BuscadorApi {
             @RequestParam(required = false) Long empTemporal,
             @RequestParam(required = false) String tdTemporal,
             @RequestParam(required = false) String idMesaPersonal,
+            @RequestParam(required = false) String tdEmpresa,
+            @RequestParam(required = false) Long empEmpresa,
             HttpServletRequest request) {
         
         final String traceId = (String) request.getAttribute("traceId");
@@ -44,6 +46,8 @@ public class BuscadorApi {
                 .empTemporal(empTemporal)
                 .tdTemporal(tdTemporal)
                 .idMesaPersonal(idMesaPersonal)
+                .tdEmpresa(tdEmpresa)
+                .empEmpresa(empEmpresa)
                 .build();
                 
         return buscadorSolicitudUseCase.buscar(criteria)
