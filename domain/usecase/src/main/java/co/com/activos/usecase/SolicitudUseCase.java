@@ -3,10 +3,12 @@ package co.com.activos.usecase;
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
 import co.com.activos.model.solicitud.SolicitudPersonal;
+import co.com.activos.model.solicitud.busqueda.SolicitudCriteria;
 import co.com.activos.model.solicitud.repository.SolicitudRepository;
 import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -82,5 +84,9 @@ public class SolicitudUseCase {
                     "Error al actualizar la solicitud: " + e.getMessage()
                 );
             });
+    }
+
+    public Mono<List<Solicitud>> buscarSolicitud(SolicitudCriteria solicitudCriteria) {
+        return solicitudRepository.buscarSolicitud(solicitudCriteria);
     }
 }

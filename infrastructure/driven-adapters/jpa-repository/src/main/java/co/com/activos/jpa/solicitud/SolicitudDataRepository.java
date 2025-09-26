@@ -2,6 +2,7 @@ package co.com.activos.jpa.solicitud;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -12,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public interface SolicitudDataRepository extends CrudRepository<SolicitudData, String>, QueryByExampleExecutor<SolicitudData> {
+public interface SolicitudDataRepository extends CrudRepository<SolicitudData, String>, QueryByExampleExecutor<SolicitudData> , JpaSpecificationExecutor<SolicitudData> {
     Page<SolicitudData> findAllBy(Pageable pageable);
     Page<SolicitudData> findByEstadoSolicitud(String estadoSolicitud, Pageable pageable);
     Page<SolicitudData> findByFechaCreacionBetween(Date fechaInicio, Date fechaFin, Pageable pageable);

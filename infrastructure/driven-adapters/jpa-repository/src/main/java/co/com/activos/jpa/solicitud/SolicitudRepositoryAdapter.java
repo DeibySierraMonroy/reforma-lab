@@ -1,19 +1,25 @@
 package co.com.activos.jpa.solicitud;
 
 import co.com.activos.jpa.helper.AdapterOperations;
+import co.com.activos.jpa.helper.SpecificationUtils;
+import co.com.activos.jpa.mesa.MesaSolicitudDetalleData;
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
 import co.com.activos.model.solicitud.SolicitudPersonal;
+import co.com.activos.model.solicitud.busqueda.SolicitudCriteria;
 import co.com.activos.model.solicitud.repository.SolicitudRepository;
 import org.reactivecommons.utils.ObjectMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Date;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,6 +64,19 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
     public Mono<List<Solicitud>> listAll() {
         return Mono.fromCallable(super::findAll);
     }
+
+    @Override
+    public Mono<List<Solicitud>> buscarSolicitud(SolicitudCriteria solicitudCriteria) {
+        return Mono.fromCallable(() -> {
+            Specification<SolicitudData> spec =
+                    SpecificationUtils.buildFromDto(solicitudCriteria, SolicitudData.class);
+            return repository.findAll(spec)
+                    .stream()
+                    .map(this::toEntity)
+                    .toList();
+        });
+    }
+
 
     @Override
     public Mono<Solicitud> getById(String idSolicitud) {
@@ -158,9 +177,9 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                     if (optionalPersonal.isEmpty()) {
                         return Mono.error(new RuntimeException("SolicitudPersonal not found with id: " + solicitudPersonal.idMesaPersonal()));
                     }
-                    
+
                     SolicitudPersonalData personalData = optionalPersonal.get();
-                    
+
                     // Update all fields from the request
                     personalData.setPrimerApellido(solicitudPersonal.primerApellido());
                     personalData.setSegundoApellido(solicitudPersonal.segundoApellido());
@@ -171,9 +190,9 @@ public class SolicitudRepositoryAdapter extends AdapterOperations<Solicitud, Sol
                     personalData.setTelefonoContacto(solicitudPersonal.telefonoContacto());
                     personalData.setCargo(solicitudPersonal.cargo());
                     personalData.setEstadoPersona(solicitudPersonal.estadoPersona());
-                    
+
                     personalData = personalRepository.save(personalData);
-                    
+
                     // Convert back to domain model with all fields
                     return Mono.just(SolicitudPersonal.builder()
                             .idMesaPersonal(personalData.getIdMesaPersonal())

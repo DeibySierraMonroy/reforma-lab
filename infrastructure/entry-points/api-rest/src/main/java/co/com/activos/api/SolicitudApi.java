@@ -5,6 +5,7 @@ import co.com.activos.api.model.SolicitudListParams;
 import co.com.activos.model.solicitud.Solicitud;
 import co.com.activos.model.solicitud.SolicitudDetalle;
 import co.com.activos.model.solicitud.SolicitudPersonal;
+import co.com.activos.model.solicitud.busqueda.SolicitudCriteria;
 import co.com.activos.usecase.SolicitudUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +65,27 @@ public class SolicitudApi {
         
         return solicitudUseCase.updateSolicitudPersonal(id, solicitudPersonal)
                 .map(updated -> ApiResponse.success(updated, request.getRequestURI(), traceId));
+    }
+
+    @GetMapping(path = "/buscarSolicitud")
+    public Mono<ApiResponse<List<Solicitud>>> buscarSolicitud(
+            @RequestParam(required = false) Long empTemporal,
+            @RequestParam(required = false) String tdTemporal,
+            @RequestParam(required = false) String tdEmpresa,
+            @RequestParam(required = false) Long empEmpresa,
+             HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("buscarSolicitud start traceId={} uri={} empTemporal={} tdTemporal={} tdEmpresa={} empEmpresa={}",
+                traceId, request.getRequestURI(), empTemporal, tdTemporal, tdEmpresa, empEmpresa);
+
+        SolicitudCriteria solicitudCriteria = SolicitudCriteria.builder()
+                .empTemporal(empTemporal)
+                .tdTemporal(tdTemporal)
+                .tdEmpresa(tdEmpresa)
+                .empEmpresa(empEmpresa)
+                .build();
+
+        return solicitudUseCase.buscarSolicitud(solicitudCriteria)
+                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
     }
 }
