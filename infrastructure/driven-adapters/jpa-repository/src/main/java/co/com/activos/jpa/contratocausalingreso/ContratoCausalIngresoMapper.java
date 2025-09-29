@@ -30,6 +30,7 @@ public class ContratoCausalIngresoMapper {
                 .audUsuario(data.getAudUsuario())
                 .audFecha(data.getAudFecha())
                 .fechaFin(data.getFechaFin())
+                .idCausalIngreso(data.getIdCausalIngreso())
                 .build();
     }
 
@@ -58,6 +59,7 @@ public class ContratoCausalIngresoMapper {
                 .audUsuario(domain.getAudUsuario())
                 .audFecha(domain.getAudFecha())
                 .fechaFin(domain.getFechaFin())
+                .idCausalIngreso(domain.getIdCausalIngreso())
                 .build();
     }
 }

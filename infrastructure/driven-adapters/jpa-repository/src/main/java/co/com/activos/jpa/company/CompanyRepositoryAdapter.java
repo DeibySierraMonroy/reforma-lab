@@ -21,5 +21,7 @@ public class CompanyRepositoryAdapter extends AdapterOperations<Company, Company
                 .flatMap(Mono::justOrEmpty)
                 .map(this::toEntity);
     }
+
+
 }
 

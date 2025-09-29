@@ -96,6 +96,7 @@ public class MesaSolicitudDetalleRepositoryAdapter implements MesaSolicitudDetal
                 .audUser(data.getAudUser())
                 .audDate(data.getAudDate())
                 .estado(data.getEstado())
+                .idDetalleOrigina(data.getIdDetalleOrigina())
                 .build();
     }
 }

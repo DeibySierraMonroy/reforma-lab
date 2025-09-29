@@ -56,6 +56,9 @@ public class ContratoCausalIngresoData {
     
     @Column(name = "NOMBRE_CARGO", length = 250)
     private String nombreCargo;
+
+    @Column(name = "ID_CAUSAL_INGRESO")
+    private Long idCausalIngreso;
     
     @Column(name = "NOM_EMPLEADO_REEMPLAZAR", length = 255)
     private String nomEmpleadoReemplazar;

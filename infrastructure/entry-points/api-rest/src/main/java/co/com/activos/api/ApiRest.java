@@ -1,4 +1,5 @@
 package co.com.activos.api;
+
 import co.com.activos.api.model.ApiResponse;
 import co.com.activos.model.company.Company;
 import co.com.activos.model.company.CompanyDetails;
@@ -12,11 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 
 /**
- * 
+ *
  */
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,11 +69,19 @@ public class ApiRest {
             @PathVariable("numberDocument") Long numberDocument,
             HttpServletRequest request) {
         final String traceId = (String) request.getAttribute("traceId");
-        log.info("getCompanyDetails start traceId={} typeDocument={} numberDocument={} uri={}", 
+        log.info("getCompanyDetails start traceId={} typeDocument={} numberDocument={} uri={}",
                 traceId, typeDocument, numberDocument, request.getRequestURI());
         return companyDetailsUseCase.getCompanyDetails(typeDocument, numberDocument)
                 .collectList()
                 .map(details -> ApiResponse.success(details, request.getRequestURI(), traceId));
+    }
+
+    @GetMapping(path = "/companyPrimary")
+    public Mono<ApiResponse<List<Company>>> getCompanyPrimary(HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("getCompanyPrimary start traceId={} uri={}", traceId, request.getRequestURI());
+        return companyUseCase.findAll()
+                .map(company -> ApiResponse.success(company, request.getRequestURI(), traceId));
     }
 }
 

@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class MesaSolicitudDetalle {
     private String primerNombre;
+    private Long idDetalleOrigina;
     private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;

@@ -28,6 +28,7 @@ public class ContratoCausalIngreso {
     private String nomEmpleadoReemplazar;
     private String descCausaIncremento;
     private Long idCalendarioDetalle;
+    private Long idCausalIngreso;
     private String estado;
     private String estadoProceso;
     private String audUsuario;

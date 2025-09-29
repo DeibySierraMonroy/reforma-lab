@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-    @Table(name = "V_MESA_SOLICITUD_DETALLE", schema = "RHU")
+@Table(name = "V_MESA_SOLICITUD_DETALLE", schema = "RHU")
 public class MesaSolicitudDetalleData {
     @Id
     @Column(name = "ID_MESA_PERSONAL")
@@ -46,8 +46,11 @@ public class MesaSolicitudDetalleData {
     @Column(name = "CAUSA_ORIGINA")
     private String causaOrigina;
 
-    @Column(name = "DETALLE_ORIGINA")
+    @Column(name = "DES_DETALLE_ORIGINA")
     private String detalleOrigina;
+
+    @Column(name = "DETALLE_ORIGINA")
+    private Long idDetalleOrigina;
 
     @Column(name = "ESPECIFICA_CAUSA")
     private String especificaCausa;
