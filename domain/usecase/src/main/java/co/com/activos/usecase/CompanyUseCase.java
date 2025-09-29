@@ -12,6 +12,7 @@ import java.util.List;
 public class CompanyUseCase {
     private final CompanyRepository companyRepository;
 
+
     public Mono<Company> searchCompany(Long numberDocument, String typeDocument) {
         return companyRepository.findByIdAndTypeDocument(numberDocument, typeDocument)
                 .switchIfEmpty(Mono.error(new BusinessException(

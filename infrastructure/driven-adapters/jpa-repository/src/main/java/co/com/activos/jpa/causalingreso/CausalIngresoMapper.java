@@ -1,6 +1,7 @@
 package co.com.activos.jpa.causalingreso;
 
-import co.com.activos.model.causalingreso.CausalIngreso;
+
+import co.com.activos.model.parametrizacionCausales.causalIngreso.CausalIngreso;
 
 public class CausalIngresoMapper {
 

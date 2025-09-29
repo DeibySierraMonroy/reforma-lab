@@ -1,4 +1,4 @@
-package co.com.activos.model.causalingreso;
+package co.com.activos.model.parametrizacionCausales.causalIngreso;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
