@@ -1,10 +1,13 @@
 package co.com.activos.jpa.view;
 
+import co.com.activos.jpa.helper.SpecificationUtils;
 import co.com.activos.model.company.repository.EmpresaCausalesViewRepository;
 import co.com.activos.model.company.view.EmpresaCausalesView;
+import co.com.activos.model.solicitud.busqueda.CausalRelacionCriteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,14 +26,16 @@ public class EmpresaViewRepositoryAdapter implements EmpresaCausalesViewReposito
 
 
     @Override
-    public Mono<List<EmpresaCausalesView>> findByNumberDocumentAndTypeDocument(Long numberDocument, String typeDocument, int pagina, int total) {
-        return Mono.fromCallable(() -> repository.findByNumeroDocumentoAndTipoDocumento(numberDocument, typeDocument
-                        , PageRequest.of(pagina, total)))
-                .map(list -> list.stream()
+    public Flux<EmpresaCausalesView> buscar(CausalRelacionCriteria causalRelacionCriteria) {
+        Specification<EmpresaCausalesViewData> spec = SpecificationUtils.buildFromDto(causalRelacionCriteria, EmpresaCausalesViewData.class);
+        PageRequest pageRequest = PageRequest.of(causalRelacionCriteria.getPagina(), causalRelacionCriteria.getSize());
+        return Flux.fromIterable(
+                repository.findAll(spec, pageRequest)
+                        .stream()
                         .map(EmpresaViewMapper::toEntity)
-                        .collect(Collectors.toList()))
-                .defaultIfEmpty(Collections.emptyList())
-                .subscribeOn(Schedulers.boundedElastic());
+                        .toList()
+        );
+
     }
 
     @Override

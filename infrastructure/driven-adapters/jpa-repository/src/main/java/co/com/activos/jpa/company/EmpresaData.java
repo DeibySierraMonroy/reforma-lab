@@ -14,14 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "EMPRESA")
+@Table(name = "V_EMPRESA_ACCESO" , schema = "GCP")
 @Entity
 public class EmpresaData {
     @Id
-    @Column(name = "EMP_ND")
+    @Column(name = "NIT_EMPRESA")
     private Long numberDocument;
-    @Column(name = "TDC_TD")
-    private String typeDocument;
-    @Column(name = "EMP_NOMBRE")
+
+    @Column(name = "EMPRESA")
     private String name;
 }

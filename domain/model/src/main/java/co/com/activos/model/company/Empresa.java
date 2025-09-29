@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Empresa {
     private Long numberDocument;
-    private String typeDocument;
     private String name;
 }

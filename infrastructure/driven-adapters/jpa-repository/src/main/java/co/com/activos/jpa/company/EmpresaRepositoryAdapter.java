@@ -26,7 +26,7 @@ public class EmpresaRepositoryAdapter extends AdapterOperations<Empresa, Empresa
                     PageRequest.of(pagina, total)
                 ))
                 .flatMap(page -> Flux.fromIterable(page.getContent())
-                        .map(this::toEntity)
+                        .map(EmpresaMapper::toDomain)
                         .collectList());
     }
 

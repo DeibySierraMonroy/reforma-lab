@@ -2,8 +2,6 @@ package co.com.activos.usecase;
 
 import co.com.activos.model.causalingresoreldetalle.CausalIngresoRelDetalle;
 import co.com.activos.model.causalingresoreldetalle.gateway.CausalIngresoRelDetalleRepository;
-import co.com.activos.model.common.BusinessException;
-import co.com.activos.model.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

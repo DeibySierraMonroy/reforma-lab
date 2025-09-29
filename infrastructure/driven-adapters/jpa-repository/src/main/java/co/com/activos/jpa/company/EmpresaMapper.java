@@ -10,7 +10,6 @@ public class EmpresaMapper {
         
         return Empresa.builder()
                 .numberDocument(data.getNumberDocument())
-                .typeDocument(data.getTypeDocument())
                 .name(data.getName())
                 .build();
     }
@@ -22,7 +21,6 @@ public class EmpresaMapper {
         
         return EmpresaData.builder()
                 .numberDocument(domain.getNumberDocument())
-                .typeDocument(domain.getTypeDocument())
                 .name(domain.getName())
                 .build();
     }

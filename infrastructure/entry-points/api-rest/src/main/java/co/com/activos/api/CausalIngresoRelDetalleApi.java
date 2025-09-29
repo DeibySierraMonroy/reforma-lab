@@ -5,6 +5,7 @@ import co.com.activos.api.model.CausalEmpresaDto;
 import co.com.activos.model.causalingresoreldetalle.CausalIngresoRelDetalle;
 import co.com.activos.model.company.EmpresaCausales;
 import co.com.activos.model.company.view.EmpresaCausalesView;
+import co.com.activos.model.solicitud.busqueda.CausalRelacionCriteria;
 import co.com.activos.usecase.CausalIngresoRelDetalleUseCase;
 import co.com.activos.usecase.EmpresaCausalUseCase;
 import jakarta.servlet.http.HttpServletRequest;
@@ -79,17 +80,28 @@ public class CausalIngresoRelDetalleApi {
     }
 
 
-    @GetMapping("/parametrizadas/{tipoDocumento}/{numeroDocumento}")
-    public Mono<ApiResponse<List<EmpresaCausalesView>>> findParametrizadas(@PathVariable String tipoDocumento,
-                                                                           @PathVariable Long numeroDocumento,
+    @GetMapping("/parametrizadas")
+    public Mono<ApiResponse<List<EmpresaCausalesView>>> findParametrizadas(@RequestParam String tipoDocumento,
+                                                                           @RequestParam Long numeroDocumento,
+                                                                           @RequestParam Long causal,
                                                                            @RequestParam(defaultValue = "0") int page,
                                                                            @RequestParam(defaultValue = "20") int size,
                                                                            HttpServletRequest request) {
         final String traceId = (String) request.getAttribute("traceId");
         log.info("findParametrizadas start traceId={} tipoDocumento={} numeroDocumento={} uri={}", traceId, tipoDocumento, numeroDocumento, request.getRequestURI());
 
-        return empresaCausalUseCase.findByNumberDocumentAndTypeDocument(numeroDocumento, tipoDocumento , page, size)
-                .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
+        CausalRelacionCriteria causalRelacionCriteria = CausalRelacionCriteria.builder()
+                .numeroDocumento(numeroDocumento)
+                .tipoDocumento(tipoDocumento)
+                .pagina(page)
+                .size(size)
+                .causal(causal)
+                .build();
+
+        return empresaCausalUseCase.buscarParametrizacion(causalRelacionCriteria)
+                .collectList()
+                .map(list ->
+                        ApiResponse.success(list, request.getRequestURI(), traceId));
     }
 
 

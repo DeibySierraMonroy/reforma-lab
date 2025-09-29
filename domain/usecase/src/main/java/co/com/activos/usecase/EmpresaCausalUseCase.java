@@ -6,7 +6,9 @@ import co.com.activos.model.company.EmpresaCausales;
 import co.com.activos.model.company.repository.EmpresaCausalRepository;
 import co.com.activos.model.company.repository.EmpresaCausalesViewRepository;
 import co.com.activos.model.company.view.EmpresaCausalesView;
+import co.com.activos.model.solicitud.busqueda.CausalRelacionCriteria;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -26,8 +28,8 @@ public class EmpresaCausalUseCase {
 
     }
 
-    public Mono<List<EmpresaCausalesView>> findByNumberDocumentAndTypeDocument(Long numberDocument, String typeDocument, int pagina, int total) {
-        return empresaViewRepositoryAdapter.findByNumberDocumentAndTypeDocument(numberDocument, typeDocument, pagina, total);
+    public Flux<EmpresaCausalesView> buscarParametrizacion(CausalRelacionCriteria causalRelacionCriteria) {
+        return empresaViewRepositoryAdapter.buscar(causalRelacionCriteria);
     }
 
 }
