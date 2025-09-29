@@ -83,7 +83,7 @@ public class CausalIngresoRelDetalleApi {
     @GetMapping("/parametrizadas")
     public Mono<ApiResponse<List<EmpresaCausalesView>>> findParametrizadas(@RequestParam String tipoDocumento,
                                                                            @RequestParam Long numeroDocumento,
-                                                                           @RequestParam Long causal,
+                                                                           @RequestParam(required = false) Long causal ,
                                                                            @RequestParam(defaultValue = "0") int page,
                                                                            @RequestParam(defaultValue = "20") int size,
                                                                            HttpServletRequest request) {
