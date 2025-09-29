@@ -12,7 +12,6 @@ public class CausalRelacionCriteria {
     private Long numeroDocumento;
     @FilterBy("idCausal")
     private Long causal;
-
     private int pagina;
     private int size;
 }

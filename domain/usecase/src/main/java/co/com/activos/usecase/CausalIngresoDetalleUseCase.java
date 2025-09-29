@@ -6,9 +6,8 @@ import co.com.activos.model.common.BusinessException;
 import co.com.activos.model.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 public class CausalIngresoDetalleUseCase {

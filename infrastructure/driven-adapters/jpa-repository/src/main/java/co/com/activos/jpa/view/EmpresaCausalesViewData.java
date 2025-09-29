@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "V_CAUSALES_EMPRESA", schema = "RHU")
 public class EmpresaCausalesViewData {
 
-    @Id
+
     @Column(name = "id_causal")
     private Long idCausal;
 
@@ -36,6 +36,7 @@ public class EmpresaCausalesViewData {
     @Column(name = "emp_nd")
     private Long numeroDocumento;
 
+    @Id
     @Column(name = "id_relacion")
     private Long idRelacionDetalle;
 }

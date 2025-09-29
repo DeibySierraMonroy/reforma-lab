@@ -13,10 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -30,7 +26,7 @@ public class EmpresaViewRepositoryAdapter implements EmpresaCausalesViewReposito
         Specification<EmpresaCausalesViewData> spec = SpecificationUtils.buildFromDto(causalRelacionCriteria, EmpresaCausalesViewData.class);
         PageRequest pageRequest = PageRequest.of(causalRelacionCriteria.getPagina(), causalRelacionCriteria.getSize());
         return Flux.fromIterable(
-                repository.findAll(spec, pageRequest)
+                repository.findAll(spec)
                         .stream()
                         .map(EmpresaViewMapper::toEntity)
                         .toList()
