@@ -8,4 +8,5 @@ import java.util.List;
 public interface ICausalIngresoRelDetalleJpaRepository extends JpaRepository<CausalIngresoRelDetalleData, Long> {
 
     List<CausalIngresoRelDetalleData> findByIdCausalIngreso(Long idCausalIngreso);
+    CausalIngresoRelDetalleData findByIdCausalIngresoAndIdCausalIngresoDet(Long idCausalIngreso, Long idCausalIngresoDet);
 }

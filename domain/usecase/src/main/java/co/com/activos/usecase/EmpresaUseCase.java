@@ -1,7 +1,7 @@
 package co.com.activos.usecase;
 
 import co.com.activos.model.company.Empresa;
-import co.com.activos.model.company.gateway.EmpresaRepository;
+import co.com.activos.model.company.repository.EmpresaRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import java.util.List;

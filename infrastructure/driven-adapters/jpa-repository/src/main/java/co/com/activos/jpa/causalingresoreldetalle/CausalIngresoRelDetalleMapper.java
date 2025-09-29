@@ -2,6 +2,8 @@ package co.com.activos.jpa.causalingresoreldetalle;
 
 import co.com.activos.model.causalingresoreldetalle.CausalIngresoRelDetalle;
 
+import java.time.LocalDateTime;
+
 public class CausalIngresoRelDetalleMapper {
 
     public static CausalIngresoRelDetalle toDomain(CausalIngresoRelDetalleData data) {
@@ -28,9 +30,9 @@ public class CausalIngresoRelDetalleMapper {
                 .idRelCausalIngresoDetalle(domain.getIdRelCausalIngresoDetalle())
                 .idCausalIngreso(domain.getIdCausalIngreso())
                 .idCausalIngresoDet(domain.getIdCausalIngresoDet())
-                .estado(domain.getEstado())
+                .estado("A")
                 .audUsuario(domain.getAudUsuario())
-                .audFecha(domain.getAudFecha())
+                .audFecha(LocalDateTime.now())
                 //.causalIngreso(domain.getCausalIngreso())
                 //.causalIngresoDet(domain.getCausalIngresoDet())
                 .build();

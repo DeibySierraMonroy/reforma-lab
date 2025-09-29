@@ -1,5 +1,6 @@
 package co.com.activos.jpa.causal;
 
+import co.com.activos.model.causal.CausalIngresoDetalle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +21,7 @@ public interface CausalIngresoDetalleDataRepository extends CrudRepository<Causa
         )
         """, nativeQuery = true)
     List<CausalIngresoDetalleData> findNoParametrizadas(@Param("idCausalIngreso") Long idCausalIngreso);
+
+    CausalIngresoDetalleData findByDescCausalIngresoDet(String descCausalIngresoDet);
 
 }

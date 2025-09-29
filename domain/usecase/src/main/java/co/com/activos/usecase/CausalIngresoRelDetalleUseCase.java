@@ -2,6 +2,8 @@ package co.com.activos.usecase;
 
 import co.com.activos.model.causalingresoreldetalle.CausalIngresoRelDetalle;
 import co.com.activos.model.causalingresoreldetalle.gateway.CausalIngresoRelDetalleRepository;
+import co.com.activos.model.common.BusinessException;
+import co.com.activos.model.common.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,7 +24,11 @@ public class CausalIngresoRelDetalleUseCase {
     }
 
     public Mono<CausalIngresoRelDetalle> save(CausalIngresoRelDetalle causalIngresoRelDetalle) {
-        return repository.save(causalIngresoRelDetalle);
+        return repository.findByIdCausalIngresoAndIdCausalIngresoDet(
+                        causalIngresoRelDetalle.getIdCausalIngreso(),
+                        causalIngresoRelDetalle.getIdCausalIngresoDet())
+                .flatMap(Mono::just)
+                .switchIfEmpty(Mono.defer(() -> repository.save(causalIngresoRelDetalle)));
     }
 
     public Mono<CausalIngresoRelDetalle> update(CausalIngresoRelDetalle causalIngresoRelDetalle) {

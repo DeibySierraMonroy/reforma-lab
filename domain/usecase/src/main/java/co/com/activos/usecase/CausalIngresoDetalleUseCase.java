@@ -27,16 +27,17 @@ public class CausalIngresoDetalleUseCase {
     }
 
     public Mono<CausalIngresoDetalle> create(CausalIngresoDetalle causal) {
-        // Permitimos crear sin id para que la secuencia DB lo genere (RHU.SQ_CAUSALES_INGRESO_DETALLE).
-        // Si el id viene informado y es > 0, se respetará; de lo contrario, JPA generará usando la secuencia.
-        return repository.upsert(causal);
+        return repository.findByDescCausalIngresoDet(causal.descCausalIngresoDet())
+                .flatMap(existing -> Mono.<CausalIngresoDetalle>error(new BusinessException(
+                        ErrorCode.BAD_REQUEST,
+                        "Ya existe una Causal detalle con la descripción: " + causal.descCausalIngresoDet())))
+                .switchIfEmpty(Mono.defer(() -> repository.upsert(causal)));
     }
 
     public Mono<CausalIngresoDetalle> update(Long id, CausalIngresoDetalle causal) {
         if (id == null || id <= 0) {
             throw new BusinessException(ErrorCode.BAD_REQUEST, "Path variable id must be > 0 for update");
         }
-        // Enfoque simple: aseguramos el id y persistimos
         CausalIngresoDetalle toSave = CausalIngresoDetalle.builder()
                 .idCausalIngresoDet(id)
                 .descCausalIngresoDet(causal.descCausalIngresoDet())

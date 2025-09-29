@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.Valid;
@@ -48,10 +49,10 @@ public class CausalIngresoDetalleApi {
         final String traceId = (String) request.getAttribute("traceId");
         log.info("createCausal start traceId={} body={} uri={}", traceId, requestBody, request.getRequestURI());
         CausalIngresoDetalle causal = CausalIngresoDetalle.builder()
-                .descCausalIngresoDet(requestBody.getDescCausalIngresoDet())
+                .descCausalIngresoDet(requestBody.getDescCausalIngresoDet().toUpperCase())
                 .estado(requestBody.getEstado())
                 .audUsuario(requestBody.getAudUsuario())
-                .audFecha(requestBody.getAudFecha())
+                .audFecha(new Date())
                 .build();
         return causalIngresoDetalleUseCase.create(causal)
                 .map(saved -> ApiResponse.success(saved, request.getRequestURI(), traceId));

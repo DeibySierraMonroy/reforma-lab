@@ -2,7 +2,7 @@ package co.com.activos.jpa.company;
 
 import co.com.activos.jpa.helper.AdapterOperations;
 import co.com.activos.model.company.Empresa;
-import co.com.activos.model.company.gateway.EmpresaRepository;
+import co.com.activos.model.company.repository.EmpresaRepository;
 import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;

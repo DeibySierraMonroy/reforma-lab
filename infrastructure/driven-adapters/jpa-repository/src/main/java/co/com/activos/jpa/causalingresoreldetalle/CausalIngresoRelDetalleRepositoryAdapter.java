@@ -3,14 +3,15 @@ package co.com.activos.jpa.causalingresoreldetalle;
 import co.com.activos.model.causalingresoreldetalle.CausalIngresoRelDetalle;
 import co.com.activos.model.causalingresoreldetalle.gateway.CausalIngresoRelDetalleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
+
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRelDetalleRepository {
@@ -35,11 +36,9 @@ public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRe
     @Override
     public Mono<CausalIngresoRelDetalle> save(CausalIngresoRelDetalle causalIngresoRelDetalle) {
         return Mono.fromCallable(() -> {
-                    CausalIngresoRelDetalleData data = CausalIngresoRelDetalleMapper.toData(causalIngresoRelDetalle);
-                    return repository.save(data);
-                })
-                .map(CausalIngresoRelDetalleMapper::toDomain)
-                .subscribeOn(Schedulers.boundedElastic());
+            CausalIngresoRelDetalleData data = CausalIngresoRelDetalleMapper.toData(causalIngresoRelDetalle);
+            return CausalIngresoRelDetalleMapper.toDomain(repository.saveAndFlush(data));
+        }).subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
@@ -60,5 +59,11 @@ public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRe
                 .map(list -> list.stream()
                         .map(CausalIngresoRelDetalleMapper::toDomain)
                         .toList());
+    }
+
+    @Override
+    public Mono<CausalIngresoRelDetalle> findByIdCausalIngresoAndIdCausalIngresoDet(Long idCausalIngreso, Long idCausalIngresoDet) {
+        return Mono.fromCallable(() -> repository.findByIdCausalIngresoAndIdCausalIngresoDet(idCausalIngreso, idCausalIngresoDet))
+                .map(CausalIngresoRelDetalleMapper::toDomain);
     }
 }
