@@ -51,7 +51,7 @@ public class CausalIngresoDetalleUseCase {
         return repository.deleteById(id);
     }
 
-    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso) {
-        return repository.findNoParametrizadas(idCausalIngreso);
+    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso , Long empresa) {
+        return repository.findNoParametrizadas(idCausalIngreso,empresa);
     }
 }

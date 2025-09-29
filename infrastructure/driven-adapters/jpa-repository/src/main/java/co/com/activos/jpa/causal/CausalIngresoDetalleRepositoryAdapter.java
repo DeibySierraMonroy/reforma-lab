@@ -51,8 +51,8 @@ public class CausalIngresoDetalleRepositoryAdapter extends AdapterOperations<Cau
     }
 
     @Override
-    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso) {
-        return Mono.fromCallable(() -> repository.findNoParametrizadas(idCausalIngreso))
+    public Mono<List<CausalIngresoDetalle>> findNoParametrizadas(Long idCausalIngreso, Long empresa) {
+        return Mono.fromCallable(() -> repository.findNoParametrizadas(idCausalIngreso ,empresa))
                 .map(list -> list.stream()
                         .map(this::toDomain)
                         .collect(Collectors.toList()));
