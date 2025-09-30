@@ -39,4 +39,7 @@ public class EmpresaCausalesViewData {
     @Id
     @Column(name = "id_relacion")
     private Long idRelacionDetalle;
+
+    @Column(name = "ID_EMPRESA_CAUSAL")
+    private Long idParametrizacion;
 }

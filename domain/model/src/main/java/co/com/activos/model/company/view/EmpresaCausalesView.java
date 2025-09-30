@@ -15,4 +15,5 @@ public class EmpresaCausalesView {
     private Long numeroDocumento;
     private String tipoDocumento;
     private Long idRelacionDetalle;
+    private Long idParametrizacion;
 }

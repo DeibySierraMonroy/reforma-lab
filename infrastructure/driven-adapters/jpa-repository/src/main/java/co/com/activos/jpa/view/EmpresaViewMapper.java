@@ -15,6 +15,7 @@ public class EmpresaViewMapper {
                 .numeroDocumento(data.getNumeroDocumento())
                 .tipoDocumento(data.getTipoDocumento())
                 .idRelacionDetalle(data.getIdRelacionDetalle())
+                .idParametrizacion(data.getIdParametrizacion())
                 .build();
     }
 }
