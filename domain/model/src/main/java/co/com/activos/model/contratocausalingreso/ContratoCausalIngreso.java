@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ContratoCausalIngreso {
     private Long idContratoCausalIngreso;
+    private String idPersonal;
     private String tdcTd;
     private Long empNd;
     private Long ctoNumero;

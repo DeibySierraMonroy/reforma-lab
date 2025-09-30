@@ -2,6 +2,8 @@ package co.com.activos.usecase;
 
 import co.com.activos.model.contratocausalingreso.ContratoCausalIngreso;
 import co.com.activos.model.contratocausalingreso.gateway.ContratoCausalIngresoRepository;
+import co.com.activos.model.solicitud.actualizar.ActualizarSolicitudDetalle;
+import co.com.activos.model.solicitud.actualizar.ActualizarSolicitudRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -10,6 +12,7 @@ import reactor.core.publisher.Mono;
 public class ContratoCausalIngresoUseCase {
 
     private final ContratoCausalIngresoRepository repository;
+    private final ActualizarSolicitudRepository actualizarSolicitudRepository;
 
     public Flux<ContratoCausalIngreso> findAll() {
         return repository.findAll();
@@ -20,7 +23,14 @@ public class ContratoCausalIngresoUseCase {
     }
 
     public Mono<ContratoCausalIngreso> save(ContratoCausalIngreso contrato) {
-        return repository.save(contrato);
+        return repository.save(contrato)
+                .flatMap(saved -> actualizarSolicitudRepository
+                        .actualizar(ActualizarSolicitudDetalle.builder()
+                                .id(contrato.getIdPersonal())
+                                .estado("A")
+                                .build())
+                        .thenReturn(saved)
+                );
     }
 
     public Mono<ContratoCausalIngreso> update(ContratoCausalIngreso contrato) {
