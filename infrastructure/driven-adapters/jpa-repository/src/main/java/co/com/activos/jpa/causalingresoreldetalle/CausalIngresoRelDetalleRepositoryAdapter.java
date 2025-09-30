@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
 import java.util.List;
 
 
@@ -46,10 +47,15 @@ public class CausalIngresoRelDetalleRepositoryAdapter implements CausalIngresoRe
         return null;
     }
 
+
     @Override
     public Mono<Void> deleteById(Long id) {
         return Mono.fromRunnable(() -> repository.deleteById(id))
                 .subscribeOn(Schedulers.boundedElastic())
+                .onErrorResume(e -> {
+                    log.error("Error al eliminar el registro con id {}: {}", id, e.getMessage(), e);
+                    return Mono.error(new RuntimeException("No es posible eliminar este registro porque tiene información asociada.", e));
+                })
                 .then();
     }
 

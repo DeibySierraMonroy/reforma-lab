@@ -83,7 +83,7 @@ public class CausalIngresoRelDetalleApi {
     @GetMapping("/parametrizadas")
     public Mono<ApiResponse<List<EmpresaCausalesView>>> findParametrizadas(@RequestParam String tipoDocumento,
                                                                            @RequestParam Long numeroDocumento,
-                                                                           @RequestParam(required = false) Long causal ,
+                                                                           @RequestParam(required = false) Long causal,
                                                                            @RequestParam(defaultValue = "0") int page,
                                                                            @RequestParam(defaultValue = "20") int size,
                                                                            HttpServletRequest request) {
@@ -134,5 +134,14 @@ public class CausalIngresoRelDetalleApi {
 
         return useCase.findParametrizadas(idCausalIngreso)
                 .map(list -> ApiResponse.success(list, request.getRequestURI(), traceId));
+    }
+
+    @DeleteMapping("/parametrizadas/{idParametrizacion}")
+    public Mono<ApiResponse<String>> deleteParametrizacion(@PathVariable Long idParametrizacion, HttpServletRequest request) {
+        final String traceId = (String) request.getAttribute("traceId");
+        log.info("deleteParametrizacion start traceId={} idParametrizacion={} uri={}", traceId, idParametrizacion, request.getRequestURI());
+
+        return empresaCausalUseCase.delete(idParametrizacion)
+                .map(result -> ApiResponse.success(result, request.getRequestURI(), traceId));
     }
 }

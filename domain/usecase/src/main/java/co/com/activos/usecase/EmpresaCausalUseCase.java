@@ -32,4 +32,8 @@ public class EmpresaCausalUseCase {
         return empresaViewRepositoryAdapter.buscar(causalRelacionCriteria);
     }
 
+    public Mono<String> delete(Long idParametrizacion){
+        return empresaCausalRepository.delete(idParametrizacion);
+    }
+
 }
