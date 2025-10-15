@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder()
@@ -33,6 +34,6 @@ public class ContratoCausalIngreso {
     private String estado;
     private String estadoProceso;
     private String audUsuario;
-    private LocalDateTime audFecha;
-    private LocalDate fechaFin;
+    private Date audFecha;
+    private Date fechaFin;
 }

@@ -1,5 +1,7 @@
 package co.com.activos.jpa.contratocausalingreso;
 
+import co.com.activos.model.common.BusinessException;
+import co.com.activos.model.common.ErrorCode;
 import co.com.activos.model.contratocausalingreso.ContratoCausalIngreso;
 import co.com.activos.model.contratocausalingreso.gateway.ContratoCausalIngresoRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,27 +34,42 @@ public class ContratoCausalIngresoRepositoryAdapter implements ContratoCausalIng
     @Override
     public Mono<ContratoCausalIngreso> save(ContratoCausalIngreso contratoCausalIngreso) {
         return Mono.fromCallable(() -> {
-                ContratoCausalIngresoData data = ContratoCausalIngresoMapper.toData(contratoCausalIngreso);
-                return repository.save(data);
-            })
-            .map(ContratoCausalIngresoMapper::toDomain)
-            .subscribeOn(Schedulers.boundedElastic());
+                    ContratoCausalIngresoData data = ContratoCausalIngresoMapper.toData(contratoCausalIngreso);
+                    return repository.save(data);
+                })
+                .map(ContratoCausalIngresoMapper::toDomain)
+                .subscribeOn(Schedulers.boundedElastic());
     }
 
     @Override
     public Mono<ContratoCausalIngreso> update(ContratoCausalIngreso contratoCausalIngreso) {
         return Mono.fromCallable(() -> {
-                if (contratoCausalIngreso.getIdContratoCausalIngreso() == null) {
-                    throw new IllegalArgumentException("ID is required for update");
-                }
-                if (!repository.existsById(contratoCausalIngreso.getIdContratoCausalIngreso())) {
-                    throw new RuntimeException("ContratoCausalIngreso not found with id: " + contratoCausalIngreso.getIdContratoCausalIngreso());
-                }
-                ContratoCausalIngresoData data = ContratoCausalIngresoMapper.toData(contratoCausalIngreso);
-                return repository.save(data);
-            })
-            .map(ContratoCausalIngresoMapper::toDomain)
-            .subscribeOn(Schedulers.boundedElastic());
+                    if (contratoCausalIngreso.getIdContratoCausalIngreso() == null) {
+                        throw new IllegalArgumentException("ID es requerido para realizar actualizacion");
+                    }
+                    if (!repository.existsById(contratoCausalIngreso.getIdContratoCausalIngreso())) {
+                        throw new BusinessException(ErrorCode.NOT_FOUND, "No existe la parametrizacion :  " + contratoCausalIngreso.getIdContratoCausalIngreso());
+                    }
+                    ContratoCausalIngresoData data = ContratoCausalIngresoMapper.toData(contratoCausalIngreso);
+                    return repository.save(data);
+                })
+                .map(ContratoCausalIngresoMapper::toDomain)
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    @Override
+    public Mono<ContratoCausalIngreso> validarExistencia(ContratoCausalIngreso contratoCausalIngreso) {
+        return Mono.defer(() ->
+                    Mono.justOrEmpty(repository
+                            .findByTdcTdAndEmpNdAndTdcTdFilAndEmpNdFilAndTdcTdEplAndEplNd(
+                                    contratoCausalIngreso.getTdcTd(),
+                                    contratoCausalIngreso.getEmpNd(),
+                                    contratoCausalIngreso.getTdcTdFil(),
+                                    contratoCausalIngreso.getEmpNdFil(),
+                                    contratoCausalIngreso.getTdcTdEpl(),
+                                    contratoCausalIngreso.getEplNd()))
+                            .map(ContratoCausalIngresoMapper::toDomain)
+                .subscribeOn(Schedulers.boundedElastic()));
     }
 
     @Override

@@ -2,6 +2,9 @@ package co.com.activos.jpa.contratocausalingreso;
 
 import co.com.activos.model.contratocausalingreso.ContratoCausalIngreso;
 
+import java.util.Date;
+import java.util.Objects;
+
 
 public class ContratoCausalIngresoMapper {
 
@@ -29,7 +32,7 @@ public class ContratoCausalIngresoMapper {
                 .estadoProceso(data.getEstadoProceso())
                 .audUsuario(data.getAudUsuario())
                 .audFecha(data.getAudFecha())
-                .fechaFin(data.getFechaFin())
+                .fechaFin(Objects.isNull(data.getFechaFin()) ? null : data.getFechaFin())
                 .idCausalIngreso(data.getIdCausalIngreso())
                 .build();
     }
@@ -57,8 +60,8 @@ public class ContratoCausalIngresoMapper {
                 .estado(domain.getEstado())
                 .estadoProceso(domain.getEstadoProceso())
                 .audUsuario(domain.getAudUsuario())
-                .audFecha(domain.getAudFecha())
-                .fechaFin(domain.getFechaFin())
+                .audFecha(new Date())
+                .fechaFin(Objects.isNull(domain.getFechaFin()) ? null : domain.getFechaFin())
                 .idCausalIngreso(domain.getIdCausalIngreso())
                 .build();
     }
