@@ -19,7 +19,7 @@ ENV JAVA_OPTS=""
 VOLUME /tmp
 
 # Exponer el puerto
-EXPOSE 8081
+EXPOSE 8080
 
 # Comando para ejecutar la aplicación
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /opt/app/app.jar " ]
