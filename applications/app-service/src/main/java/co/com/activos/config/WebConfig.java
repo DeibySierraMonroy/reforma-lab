@@ -14,7 +14,9 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOriginPatterns(
                         "http://localhost:4200",
                         "https://oficina-virtual-194964492367.us-east1.run.app",
-                        "https://front-gestor-document-194964492367.us-east1.run.app"
+                        "https://front-gestor-document-194964492367.us-east1.run.app",
+                        "https://reforma-lab-2-194964492367.us-east1.run.app",
+                        "https://reforma-laboral-qa-194964492367.us-east1.run.app/"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")

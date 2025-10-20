@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -80,8 +78,8 @@ public class ContratoCausalIngresoData {
     
     @CreationTimestamp
     @Column(name = "AUD_FECHA", updatable = false, columnDefinition = "DATE DEFAULT SYSDATE")
-    private LocalDateTime audFecha;
+    private Date audFecha;
     
     @Column(name = "FECHA_FIN")
-    private LocalDate fechaFin;
+    private Date fechaFin;
 }
