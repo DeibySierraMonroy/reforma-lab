@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/infrastructure/driven-adapters/jpa-repository/ms-solicitud-reforma.jpa-repository.main.iml" filepath="$PROJECT_DIR$/.idea/modules/infrastructure/driven-adapters/jpa-repository/ms-solicitud-reforma.jpa-repository.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/model/ms-solicitud-reforma.model.main.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/model/ms-solicitud-reforma.model.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/domain/usecase/ms-solicitud-reforma.usecase.main.iml" filepath="$PROJECT_DIR$/.idea/modules/domain/usecase/ms-solicitud-reforma.usecase.main.iml" />
+    </modules>
+  </component>
+</project>
