@@ -15,7 +15,7 @@ public class CausalIngresoDetalleRequest {
     private Long idCausalIngresoDet;
 
     @NotBlank(message = "descCausalIngresoDet is required")
-    @Size(max = 250, message = "descCausalIngresoDet length must be <= 250")
+    @Size(max = 500, message = "descCausalIngresoDet length must be <= 250")
     private String descCausalIngresoDet;
 
     @Size(max = 3, message = "estado length must be <= 3")
